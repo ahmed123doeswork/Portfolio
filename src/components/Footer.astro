@@ -1,0 +1,71 @@
+---
+import { PROFILE } from '../content/profile.ts';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="footer-copy">
+      &copy; {year} {PROFILE.firstName}. Built with
+      <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>.
+    </p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      {PROFILE.linkedin && (
+        <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" class="footer-link">
+          LinkedIn
+        </a>
+      )}
+      {PROFILE.github && (
+        <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" class="footer-link">
+          GitHub
+        </a>
+      )}
+      <a href={`mailto:${PROFILE.email}`} class="footer-link">
+        Email
+      </a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+.footer {
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-8);
+  margin-top: auto;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.footer-copy {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+}
+
+.footer-copy a {
+  color: var(--color-text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.footer-link {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--color-accent);
+}
+</style>

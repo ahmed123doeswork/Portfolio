@@ -1,0 +1,217 @@
+---
+import ThemeToggle from './ThemeToggle.tsx';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="nav-header">
+  <nav class="nav-inner container" aria-label="Main navigation">
+    <a href="/" class="nav-logo" aria-label="Ahmed — home">
+      <span class="nav-logo-initials" aria-hidden="true">A</span>
+      <span class="nav-logo-text">Ahmed</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={['nav-link', { 'nav-link--active': currentPath === href }]}
+            aria-current={currentPath === href ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="nav-actions">
+      <ThemeToggle client:load />
+      <button
+        class="nav-mobile-toggle btn btn-ghost"
+        id="mobile-menu-toggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <ul class="mobile-menu-links" role="list">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class:list={['mobile-link', { 'mobile-link--active': currentPath === href }]}
+            aria-current={currentPath === href ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.hasAttribute('hidden') === false;
+    if (isOpen) {
+      menu?.setAttribute('hidden', '');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+    } else {
+      menu?.removeAttribute('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close navigation menu');
+    }
+  });
+</script>
+
+<style>
+.nav-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--color-bg) 90%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--nav-height);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  gap: var(--space-4);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav-logo-initials {
+  width: 36px;
+  height: 36px;
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+}
+
+.nav-logo-text {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav-link:hover,
+.nav-link--active {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+}
+
+.nav-link--active {
+  color: var(--color-accent);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nav-mobile-toggle {
+  display: none;
+}
+
+.mobile-menu {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding: var(--space-4);
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-link {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.mobile-link:hover,
+.mobile-link--active {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+}
+
+.mobile-link--active {
+  color: var(--color-accent);
+}
+
+@media (max-width: 639px) {
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: flex; }
+  .nav-header { height: auto; min-height: var(--nav-height); }
+  .nav-inner { height: var(--nav-height); }
+}
+</style>

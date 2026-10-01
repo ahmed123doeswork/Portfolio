@@ -1,0 +1,231 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    id: 'workflowdesk',
+    name: 'WorkflowDesk',
+    status: 'in-development' as const,
+    stack: ['PHP', 'Laravel', 'Vue', 'TypeScript', 'MySQL'],
+    themes: ['Multi-tenant', 'RBAC', 'Audit trail'],
+    description:
+      'Multi-tenant enquiry management system with role-based access control, configurable state transitions, and a complete audit history. Backend-enforced tenant isolation using Laravel policies and transactional state changes.',
+    highlights: [
+      'Server-enforced tenant and role boundaries',
+      'Transactional state changes with audit events',
+      'Pagination and filter state preserved on navigation',
+      'Stale-update conflict handling',
+    ],
+  },
+  {
+    id: 'databridge',
+    name: 'DataBridge Inspector',
+    status: 'in-development' as const,
+    stack: ['Python', 'FastAPI', 'React', 'TypeScript'],
+    themes: ['Data quality', 'CSV processing', 'Validation'],
+    description:
+      'Contact data normalisation tool that maps CSV columns, validates required fields, detects and explains duplicates, and exports a cleaned file. Input limits enforced; original values always preserved alongside proposed changes.',
+    highlights: [
+      'Explainable duplicate detection with reasons',
+      'Field-level normalisation preview before export',
+      'Safe CSV export with formula injection protection',
+      'File-size and row-count limits enforced',
+    ],
+  },
+  {
+    id: 'timeslot',
+    name: 'TimeSlot',
+    status: 'in-development' as const,
+    stack: ['C#', 'ASP.NET Core', 'React', 'TypeScript', 'PostgreSQL'],
+    themes: ['Timezones', 'Concurrency', 'Idempotency'],
+    description:
+      'Timezone-aware appointment booking that stores UTC instants with IANA zone identifiers, prevents overlapping bookings via database constraints, and implements idempotent booking and atomic rescheduling.',
+    highlights: [
+      'UTC storage + IANA zone identity displayed to user',
+      'Database-level concurrency protection for bookings',
+      'Idempotent booking keys for safe retries',
+      'Atomic rescheduling: old slot closed, new slot opened in one transaction',
+    ],
+  },
+];
+
+const statusLabel: Record<string, string> = {
+  'in-development': 'In development',
+  'complete': 'Complete',
+};
+---
+
+<BaseLayout
+  title="Projects"
+  description="Backend engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core — with real architecture, tests, and browser demos."
+>
+  <section class="section" aria-labelledby="projects-heading">
+    <div class="container">
+      <div class="projects-header">
+        <div>
+          <p class="eyebrow">Work samples</p>
+          <h1 id="projects-heading">Projects</h1>
+          <p class="projects-intro">
+            Three focused backend engineering case studies across different languages and frameworks. Each demonstrates real domain logic, tests, and an interactive browser simulation. Source code and startup instructions are included.
+          </p>
+        </div>
+      </div>
+
+      <div class="projects-list" role="list">
+        {projects.map(project => (
+          <article class="project-card card" role="listitem" aria-labelledby={`project-${project.id}-title`}>
+            <div class="project-card-header">
+              <div class="project-card-title-row">
+                <h2 id={`project-${project.id}-title`} class="project-card-title">
+                  {project.name}
+                </h2>
+                <span class="badge status-badge status-badge--in-dev">
+                  {statusLabel[project.status]}
+                </span>
+              </div>
+              <div class="project-tags">
+                {project.stack.map(s => <span class="badge">{s}</span>)}
+                {project.themes.map(t => <span class="badge badge-accent">{t}</span>)}
+              </div>
+            </div>
+
+            <p class="project-desc">{project.description}</p>
+
+            <ul class="project-highlights">
+              {project.highlights.map(h => <li>{h}</li>)}
+            </ul>
+
+            <div class="project-actions">
+              <span class="project-unavailable">
+                Case study and browser demo coming soon.
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="projects-note">
+        <p>
+          Projects are built independently to demonstrate backend engineering approaches with PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. Each will include local Docker Compose startup, seed data, architecture notes, and tests.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.projects-header {
+  margin-bottom: var(--space-12);
+}
+
+.eyebrow {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  margin-bottom: var(--space-3);
+}
+
+h1 {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
+  margin-bottom: var(--space-4);
+}
+
+.projects-intro {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+  line-height: var(--leading-relaxed);
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.project-card {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  gap: var(--space-4);
+}
+
+.project-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.project-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.project-card-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.status-badge--in-dev {
+  background: color-mix(in srgb, #f59e0b 15%, transparent);
+  color: #b45309;
+  border-color: color-mix(in srgb, #f59e0b 30%, transparent);
+}
+
+.project-desc {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.project-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+}
+
+.project-highlights li {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.project-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.project-unavailable {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+.projects-note {
+  margin-top: var(--space-12);
+  padding: var(--space-6);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+}
+
+.projects-note p {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+</style>

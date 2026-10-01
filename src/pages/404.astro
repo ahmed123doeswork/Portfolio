@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" noIndex={true}>
+  <section class="not-found section">
+    <div class="container not-found-inner">
+      <p class="not-found-code" aria-hidden="true">404</p>
+      <h1 class="not-found-title">Page not found</h1>
+      <p class="not-found-body">
+        The page you're looking for doesn't exist or has moved.
+      </p>
+      <div class="not-found-actions">
+        <a href="/" class="btn btn-primary">Go home</a>
+        <a href="/projects" class="btn btn-outline">Browse projects</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.not-found {
+  min-height: calc(100dvh - var(--nav-height) - 8rem);
+  display: flex;
+  align-items: center;
+}
+
+.not-found-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.not-found-code {
+  font-size: clamp(5rem, 15vw, 10rem);
+  font-weight: var(--font-bold);
+  color: var(--color-border);
+  line-height: 1;
+  user-select: none;
+}
+
+.not-found-title {
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  color: var(--color-text-primary);
+}
+
+.not-found-body {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 40ch;
+}
+
+.not-found-actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

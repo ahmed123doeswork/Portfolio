@@ -1,0 +1,94 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import '../styles/avatar.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description = 'Ahmed — Software Engineer building reliable business applications, integrations, and data workflows.',
+  image = '/assets/profile.png',
+  noIndex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'http://localhost:4321');
+const pageTitle = title === 'Home' ? 'Ahmed — Software Engineer' : `${title} — Ahmed`;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+  <title>{pageTitle}</title>
+
+  <!-- Canonical -->
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(image, canonicalURL)} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(image, canonicalURL)} />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Theme initialization — inline to prevent flash -->
+  <script is:inline>
+    (function () {
+      try {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Nav />
+  <main id="main-content">
+    <slot />
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style is:global>
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-text-on-accent);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  z-index: 9999;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+</style>

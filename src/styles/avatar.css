@@ -1,0 +1,296 @@
+/* ─── Avatar — Fixed bottom-right corner widget ──────────────────────────── */
+
+/* Outer container is placed via a fixed wrapper in the page */
+.avatar-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+/* ── Guide panel ── */
+
+.avatar-panel {
+  position: absolute;
+  bottom: calc(100% + var(--space-3));
+  right: 0;
+  width: min(320px, calc(100vw - 2rem));
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-xl);
+  z-index: 100;
+  animation: panel-in 0.18s ease-out;
+  /* Scrollable if content overflows viewport */
+  max-height: min(500px, 70vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)  scale(1);    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-panel { animation: none; }
+}
+
+.avatar-panel-title {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: var(--space-3);
+}
+
+/* ── Guide list ── */
+
+.guide-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.guide-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+  font-family: inherit;
+  line-height: var(--leading-snug);
+}
+
+.guide-btn:hover {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-accent);
+}
+
+.guide-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.guide-btn--active {
+  background-color: color-mix(in srgb, var(--color-teal) 12%, transparent);
+  color: var(--color-teal-dim);
+  border-color: var(--color-teal);
+}
+
+/* ── Answer ── */
+
+.guide-answer {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.guide-answer-text {
+  font-size: var(--text-xs);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.guide-answer-text--speaking {
+  animation: text-appear 0.35s ease-out;
+}
+
+@keyframes text-appear {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0);  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-answer-text--speaking { animation: none; }
+}
+
+.guide-answer-link {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-3);
+  align-self: flex-start;
+}
+
+/* ── Widget (figure + controls) ── */
+
+.avatar-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Figure ── */
+
+.avatar-figure {
+  width: 110px;
+  height: 110px;
+  filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.35));
+  cursor: default;
+}
+
+/* Breathing idle animation */
+.avatar-figure--idle .avatar-svg,
+.avatar-figure--guiding .avatar-svg {
+  animation: avatar-breathe 4s ease-in-out infinite;
+}
+
+/* Greeting nod */
+.avatar-figure--greeting .avatar-svg {
+  animation: avatar-nod 0.55s ease-in-out 2;
+}
+
+/* Speaking bob */
+.avatar-figure--speaking .avatar-svg {
+  animation: avatar-speak 0.28s ease-in-out infinite alternate;
+}
+
+/* Paused — dim slightly */
+.avatar-figure--paused .avatar-svg {
+  animation: none;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-figure .avatar-svg,
+  .avatar-figure--idle .avatar-svg,
+  .avatar-figure--guiding .avatar-svg,
+  .avatar-figure--greeting .avatar-svg,
+  .avatar-figure--speaking .avatar-svg {
+    animation: none !important;
+  }
+}
+
+/* ── Blink eyelids ── */
+
+.eyelid {
+  transform-origin: center;
+  animation: avatar-blink 5s ease-in-out infinite;
+  transform: scaleY(0);
+}
+
+.eyelid-l { animation-delay: 0s; }
+.eyelid-r { animation-delay: 0.06s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eyelid { animation: none; transform: scaleY(0); }
+}
+
+/* ── Speaking mouth ── */
+
+.mouth-speaking {
+  animation: mouth-open 0.2s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mouth-speaking { animation: none; }
+}
+
+/* ── Keyframes ── */
+
+@keyframes avatar-breathe {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes avatar-speak {
+  from { transform: translateY(0)   rotate(-1.5deg); }
+  to   { transform: translateY(-3px) rotate(1.5deg); }
+}
+
+@keyframes avatar-nod {
+  0%, 100% { transform: translateY(0);   }
+  25%      { transform: translateY(-7px); }
+  75%      { transform: translateY(3px);  }
+}
+
+@keyframes avatar-blink {
+  0%, 88%, 100% { transform: scaleY(0); }
+  93%           { transform: scaleY(1); }
+}
+
+@keyframes mouth-open {
+  from { ry: 2; }
+  to   { ry: 5; }
+}
+
+/* ── Controls ── */
+
+.avatar-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.avatar-guide-btn {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.avatar-ctrl-btn {
+  padding: var(--space-1) var(--space-2) !important;
+  font-size: var(--text-xs);
+  border-radius: var(--radius-full);
+}
+
+/* ── Collapsed pill ── */
+
+.avatar-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  box-shadow: var(--shadow-md);
+}
+
+.avatar-expand-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.avatar-expand-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 639px) {
+  .avatar-figure {
+    width: 86px;
+    height: 86px;
+  }
+
+  .avatar-panel {
+    right: -0.5rem;
+    width: min(290px, calc(100vw - 1.5rem));
+    max-height: 55vh;
+  }
+}

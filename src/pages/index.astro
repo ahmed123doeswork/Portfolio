@@ -1,0 +1,468 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Avatar from '../components/Avatar.tsx';
+import { PROFILE, SKILLS } from '../content/profile.ts';
+
+const description = `${PROFILE.tagline} PHP, Python, and JavaScript developer with experience in CRM systems, workflow automation, and API integrations.`;
+---
+
+<BaseLayout title="Home" description={description}>
+  <!-- ── Hero ── -->
+  <section class="hero section" aria-labelledby="hero-heading">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Hi, I'm</p>
+        <h1 id="hero-heading" class="hero-name">
+          {PROFILE.firstName}
+          <span class="text-accent">.</span>
+        </h1>
+        <p class="hero-role">{PROFILE.headline}</p>
+        <p class="hero-tagline">{PROFILE.tagline}</p>
+
+        <div class="hero-actions">
+          <a href="/projects" class="btn btn-primary">View Projects</a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
+          {PROFILE.resumePath && (
+            <a
+              href={PROFILE.resumePath}
+              class="btn btn-ghost"
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Résumé
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img
+            src={PROFILE.profileImage}
+            alt="Photo of Ahmed"
+            class="hero-photo"
+            width="240"
+            height="240"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section class="skills-section section-sm" aria-labelledby="skills-heading">
+    <div class="container">
+      <h2 id="skills-heading" class="section-heading">Technical Skills</h2>
+      <p class="section-sub">Technologies and practices I work with professionally.</p>
+
+      <div class="skills-grid">
+        {SKILLS.map(group => (
+          <div class="skill-group card">
+            <h3 class="skill-group-title">{group.category}</h3>
+            <ul class="skill-tags" role="list">
+              {group.items.map(item => (
+                <li><span class="badge badge-accent">{item}</span></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured Projects placeholder ── -->
+  <section class="featured-section section-sm" aria-labelledby="featured-heading">
+    <div class="container">
+      <div class="featured-header">
+        <div>
+          <h2 id="featured-heading" class="section-heading">Projects</h2>
+          <p class="section-sub">Focused backend engineering across PHP, Python, and C#.</p>
+        </div>
+        <a href="/projects" class="btn btn-outline">All projects →</a>
+      </div>
+
+      <div class="featured-grid">
+        <article class="card featured-card featured-card--coming">
+          <div class="featured-card-badge">
+            <span class="badge">PHP · Laravel · Vue</span>
+            <span class="badge">In development</span>
+          </div>
+          <h3 class="featured-card-title">WorkflowDesk</h3>
+          <p class="featured-card-desc">
+            Multi-tenant enquiry management system with role-based access, state transitions, and audit history. Backend-enforced tenant isolation with transactional changes.
+          </p>
+          <p class="featured-card-unavailable">Case study coming soon.</p>
+        </article>
+
+        <article class="card featured-card featured-card--coming">
+          <div class="featured-card-badge">
+            <span class="badge">Python · FastAPI · React</span>
+            <span class="badge">In development</span>
+          </div>
+          <h3 class="featured-card-title">DataBridge Inspector</h3>
+          <p class="featured-card-desc">
+            CSV contact normalisation tool with explainable duplicate detection, field validation, and safe export. Input limits enforced; original data always preserved.
+          </p>
+          <p class="featured-card-unavailable">Case study coming soon.</p>
+        </article>
+
+        <article class="card featured-card featured-card--coming">
+          <div class="featured-card-badge">
+            <span class="badge">C# · ASP.NET Core · React</span>
+            <span class="badge">In development</span>
+          </div>
+          <h3 class="featured-card-title">TimeSlot</h3>
+          <p class="featured-card-desc">
+            Timezone-aware appointment booking with UTC storage, IANA zone identifiers, conflict protection, and idempotent rescheduling with database-level concurrency control.
+          </p>
+          <p class="featured-card-unavailable">Case study coming soon.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section class="contact-section section" id="contact" aria-labelledby="contact-heading">
+    <div class="container contact-inner">
+      <div class="contact-text">
+        <h2 id="contact-heading" class="section-heading">Get in touch</h2>
+        <p class="section-sub">
+          Open to engineering roles and technical discussions. I read every message.
+        </p>
+      </div>
+
+      <div class="contact-links">
+        <a href={`mailto:${PROFILE.email}`} class="contact-link card">
+          <span class="contact-icon" aria-hidden="true">✉</span>
+          <div>
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">{PROFILE.email}</span>
+          </div>
+        </a>
+
+        {PROFILE.linkedin && (
+          <a
+            href={PROFILE.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link card"
+          >
+            <span class="contact-icon" aria-hidden="true">in</span>
+            <div>
+              <span class="contact-link-label">LinkedIn</span>
+              <span class="contact-link-value">linkedin.com/in/onlyahmed</span>
+            </div>
+          </a>
+        )}
+
+        {PROFILE.github && (
+          <a
+            href={PROFILE.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link card"
+          >
+            <span class="contact-icon" aria-hidden="true">⌥</span>
+            <div>
+              <span class="contact-link-label">GitHub</span>
+              <span class="contact-link-value">{PROFILE.github}</span>
+            </div>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Fixed bottom-right avatar guide -->
+  <div class="avatar-fixed" aria-label="Portfolio guide widget">
+    <Avatar client:load />
+  </div>
+</BaseLayout>
+
+<style>
+/* ── Hero ── */
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-16);
+  min-height: calc(100dvh - var(--nav-height) - 6rem);
+}
+
+.hero-eyebrow {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.hero-name {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+
+.hero-role {
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.hero-tagline {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: 42ch;
+  margin-bottom: var(--space-8);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Fixed bottom-right avatar widget */
+.avatar-fixed {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+}
+
+.hero-photo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-photo-frame {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-teal);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-teal) 20%, transparent);
+  flex-shrink: 0;
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hero-avatar-guide {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+/* ── Sections ── */
+.section-heading {
+  font-size: clamp(var(--text-2xl), 3vw, var(--text-3xl));
+  margin-bottom: var(--space-3);
+}
+
+.section-sub {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-10);
+  max-width: 56ch;
+}
+
+/* ── Skills ── */
+.skills-section {
+  background: var(--color-bg-secondary);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.skill-group-title {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-3);
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ── Featured ── */
+.featured-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-8);
+}
+
+.featured-header .section-sub {
+  margin-bottom: 0;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.featured-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.featured-card--coming {
+  opacity: 0.8;
+}
+
+.featured-card-badge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.featured-card-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+}
+
+.featured-card-desc {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+.featured-card-unavailable {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+/* ── Contact ── */
+.contact-section {
+  background: var(--color-bg-secondary);
+}
+
+.contact-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: var(--space-12);
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 280px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  text-decoration: none;
+  color: inherit;
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  background: color-mix(in srgb, var(--color-teal) 15%, transparent);
+  color: var(--color-teal-dim);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+.contact-link-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.contact-link-value {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-block: var(--space-12);
+  }
+
+  .hero-photo-wrap {
+    order: -1;
+  }
+
+  .hero-photo-frame {
+    width: 160px;
+    height: 160px;
+  }
+
+  .contact-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-links {
+    min-width: auto;
+  }
+
+  /* Smaller fixed avatar on mobile */
+  .avatar-fixed {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    justify-content: center;
+  }
+}
+</style>
