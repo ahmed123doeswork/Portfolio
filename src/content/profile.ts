@@ -6,12 +6,12 @@ export const PROFILE = {
   // Identity — update before publishing
   firstName: 'Ahmed',
   lastName: '', // Single-name identity confirmed by owner
-  headline: 'Software Engineer · PHP · Python · JavaScript',
-  tagline: 'Building reliable business applications, integrations, and data workflows.',
+  headline: 'Full-Stack Software Engineer · ASP.NET Core (C#) · React · TypeScript',
+  tagline: 'Building scalable, production-grade web applications with .NET and React.',
 
   // Contact
-  email: 'ahmed@studynetglobal.com', // confirmed from system context
-  phone: '+880 185 070 7938',
+  email: 'ahm3dxb@gmail.com',
+  phone: '+880 1577798246',
   location: 'Dhaka, Bangladesh',
 
   // Social — hide any that are null/empty
@@ -24,60 +24,66 @@ export const PROFILE = {
   // Profile image
   profileImage: '/assets/profile.png',
 
-  summary: `PHP and Python developer with experience building CRM systems, workflow automation, RESTful APIs, and data integrations. Currently developing the Scholly platform at StudyNet, implementing Bitrix24 integrations and full-stack features with CodeIgniter, React, and MySQL.`,
+  summary: `Full-Stack Software Engineer with 3+ years building scalable, production-grade web applications. Specialized in ASP.NET Core (C#) and React/TypeScript — multi-tenant SaaS features, RESTful API design, RBAC, and concurrency-safe transactional systems. First-Class B.Sc. in Computer Science, CGPA 3.98/4.00.`,
 } as const;
 
 export const SKILLS = [
   {
     category: 'Languages',
-    items: ['PHP', 'Python', 'JavaScript'],
+    items: ['C#', 'TypeScript', 'JavaScript', 'Python', 'PHP', 'SQL'],
   },
   {
-    category: 'Frameworks & Libraries',
-    items: ['CodeIgniter', 'Django', 'React'],
+    category: 'Frameworks',
+    items: ['ASP.NET Core', 'Entity Framework Core', 'React.js', 'Next.js', 'FastAPI', 'Laravel'],
+  },
+  {
+    category: 'Front-End',
+    items: ['React', 'TypeScript', 'Redux', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap'],
+  },
+  {
+    category: 'Back-End',
+    items: ['.NET 8', 'ASP.NET Core Web API', 'REST', 'SignalR', 'Middleware pipelines'],
   },
   {
     category: 'Databases',
-    items: ['MySQL'],
+    items: ['PostgreSQL', 'MySQL', 'MS SQL Server', 'Entity Framework Migrations'],
   },
   {
-    category: 'Tools & Platforms',
-    items: ['Git', 'Joomla', 'MS365', 'Bitrix24'],
+    category: 'DevOps & Tools',
+    items: ['Git', 'GitHub Actions', 'Docker', 'CI/CD', 'Postman', 'Jira', 'Agile/Scrum'],
   },
   {
-    category: 'Practices',
-    items: ['CRM Development', 'RESTful API Design', 'Project Coordination', 'Agile/Scrum'],
+    category: 'Architecture',
+    items: ['Multi-tenant SaaS', 'RBAC', 'Clean Architecture', 'Repository Pattern', 'CQRS'],
   },
 ] as const;
 
 export const EXPERIENCE = [
   {
-    title: 'IT Support and Web Developer',
+    title: 'Software Engineer (Full-Stack)',
     company: 'StudyNet Pty Ltd',
     location: 'Dhaka',
     period: 'Nov 2025 – Present',
     type: 'professional' as const,
     highlights: [
-      'Spearhead development and optimization of web applications using PHP/CodeIgniter.',
-      'Lead the Scholly software development project, implementing Bitrix24 for workflow automation.',
-      'Design, develop, and consume RESTful APIs for seamless data flow and third-party integrations.',
-      'Architect and maintain MySQL databases with optimized queries for application performance.',
-      'Collaborate on front-end development with React, HTML, CSS, and JavaScript.',
-      'Manage version control with Git for clean repositories and team collaboration.',
+      'Lead full-stack development of Scholly, a multi-tenant SaaS platform — RESTful APIs with ASP.NET Core, React front-end components, and relational data models in MySQL.',
+      'Architected RBAC and tenant isolation layers following Clean Architecture patterns.',
+      'Integrated Bitrix24 for workflow automation via REST API, enabling event-driven state transitions and audit logging.',
+      'Built and consumed 20+ RESTful API endpoints; optimized indexed MySQL schemas, cutting response times by ~35%.',
+      'Collaborated in an Agile/Scrum team using Git/GitHub for version control, code review, and CI-managed deployments.',
     ],
   },
   {
-    title: 'Assistant IT Officer',
+    title: 'Assistant IT Officer & Developer',
     company: 'StudyNet Pty Ltd',
     location: 'Dhaka',
     period: 'May 2023 – Nov 2025',
     type: 'professional' as const,
     highlights: [
-      'Supported delivery of IT solutions including ERP and CRM configuration and process documentation.',
-      'Contributed to development and enhancement of the company CRM system using CodeIgniter.',
-      'Developed modules for lead management, application tracking, and external data integrations.',
-      'Delivered technical support and stakeholder communication for software adoption.',
-      'Tracked sprint progress and communicated development updates to stakeholders.',
+      'Developed and enhanced a CodeIgniter-based CRM, adding modules for lead management, application tracking, and third-party data integration.',
+      'Contributed front-end features using React, HTML/CSS, and JavaScript, improving UX for internal stakeholders managing 1,000+ student records.',
+      'Configured and maintained ERP/CRM integrations; authored technical documentation that reduced developer onboarding time.',
+      'Documented sprint progress, tracked development tasks in Jira, and communicated updates to cross-functional stakeholders.',
     ],
   },
   {
@@ -87,9 +93,8 @@ export const EXPERIENCE = [
     period: 'Feb 2016 – Jan 2018',
     type: 'professional' as const,
     highlights: [
-      'Acted as liaison between customers and product teams, driving product improvements.',
-      'Delivered technical support and resolved customer inquiries to achieve high satisfaction rates.',
-      'Collected and analysed feedback to identify trends and improve processes.',
+      'Acted as liaison between customers and product teams, translating technical feedback into product improvement tickets.',
+      'Analyzed support data to identify recurring issues; contributed to a 20% reduction in escalation rate through process improvements.',
     ],
   },
 ] as const;
