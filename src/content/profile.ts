@@ -24,7 +24,7 @@ export const PROFILE = {
   // Profile image
   profileImage: '/assets/profile.png',
 
-  summary: `Full-Stack Software Engineer with 3+ years building scalable, production-grade web applications. Specialized in ASP.NET Core (C#) and React/TypeScript — multi-tenant SaaS features, RESTful API design, RBAC, and concurrency-safe transactional systems. First-Class B.Sc. in Computer Science, CGPA 3.98/4.00.`,
+  summary: `Full-Stack Software Engineer with 3+ years building scalable, production-grade web applications. Specialized in ASP.NET Core (C#) and React/TypeScript — multi-tenant SaaS features, RESTful API design, RBAC, and concurrency-safe transactional systems.`,
 } as const;
 
 export const SKILLS = [

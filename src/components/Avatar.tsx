@@ -60,29 +60,29 @@ const GUIDE_ITEMS: GuideItem[] = [
   {
     id: 'intro',
     label: 'Introduce yourself',
-    answer: "Hi! I'm Ahmed, a PHP and Python developer focused on CRM systems, API integrations, and workflow automation. Currently I'm building the Scholly platform at StudyNet — implementing Bitrix24 integrations and full-stack features with CodeIgniter, React, and MySQL.",
+    answer: "Hi! I'm Ahmed — a Full-Stack Software Engineer with 3+ years building production-grade web applications. I specialise in ASP.NET Core (C#) and React/TypeScript, with a strong focus on multi-tenant SaaS architecture, RBAC, and RESTful API design. Currently leading full-stack development of the Scholly platform at StudyNet.",
   },
   {
     id: 'projects',
     label: 'Show backend projects',
-    answer: 'The Projects section showcases three backend-focused applications: WorkflowDesk (PHP/Laravel + Vue), DataBridge Inspector (Python/FastAPI + React), and TimeSlot (C#/ASP.NET Core + React). Each demonstrates real backend engineering with tests, architecture notes, and a browser simulation.',
+    answer: 'Three backend-focused projects are showcased here: TimeSlot (C# / ASP.NET Core + React + PostgreSQL — timezone-aware booking with concurrency control), DataBridge Inspector (Python / FastAPI + React — CSV normalisation with duplicate detection), and WorkflowDesk (PHP / Laravel + Vue + MySQL — multi-tenant enquiry management with audit history).',
     link: { href: '/projects', text: 'Browse projects →' },
   },
   {
     id: 'arch',
     label: 'Explain an architecture decision',
-    answer: "For the portfolio itself: Astro static output with React islands. All content renders at build time, and interactivity ships as isolated React components. Zero server runtime — hosting is free and the site loads fast without any backend dependency.",
+    answer: "At work I apply Clean Architecture and Repository Pattern to keep domain logic decoupled from infrastructure. For Scholly I introduced tenant isolation at the service layer — every query is scoped to a tenant context enforced server-side, not just in the UI. For the portfolio itself: Astro static output with React islands gives zero server runtime and fast load times.",
   },
   {
     id: 'tour',
     label: 'Take a quick tour',
-    answer: "Start here for an overview and skills. Jump to About for my full experience timeline and education. The Projects section has three case studies with architecture notes, tests, and live browser demos. Use the contact links at the footer to reach me.",
+    answer: "Start here for the overview and skills snapshot — C#, TypeScript, React, .NET 8, PostgreSQL, and more. Head to About for the full experience timeline. Projects has three case studies with architecture notes, tests, and browser demos. Reach me via the Contact section at the bottom.",
     link: { href: '/about', text: 'View experience →' },
   },
   {
     id: 'contact',
     label: 'How can I contact you?',
-    answer: 'You can reach me by email or connect on LinkedIn — both links are in the footer and the Contact section on this page.',
+    answer: 'Email me at ahm3dxb@gmail.com or connect on LinkedIn — both links are in the Contact section on this page.',
     link: { href: '#contact', text: 'Go to Contact →' },
   },
 ];
