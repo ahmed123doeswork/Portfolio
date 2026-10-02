@@ -1,6 +1,6 @@
 # Portfolio Build Progress
 
-Last updated: 2026-10-01
+Last updated: 2026-10-01 (UI/UX redesign completed)
 
 ## Phase status
 
@@ -25,16 +25,16 @@ Last updated: 2026-10-01
 
 ### Phase 1 — Portfolio shell
 - [x] Astro project scaffolded (`package.json`, `astro.config.ts`, `tsconfig.json`)
-- [x] Design tokens (`src/styles/tokens.css`) — navy, teal, light/dark themes
-- [x] Global CSS (`src/styles/global.css`) — reset, typography, buttons, badges, cards
+- [x] Design tokens (`src/styles/tokens.css`) — midnight/periwinkle palette, Plus Jakarta Sans + JetBrains Mono, light/dark themes
+- [x] Global CSS (`src/styles/global.css`) — reset, editorial typography, buttons, badges, cards
 - [x] `BaseLayout.astro` — HTML shell, SEO meta, OG tags, skip link, theme flash prevention
 - [x] `Nav.astro` — sticky nav with mobile hamburger, keyboard accessible
 - [x] `Footer.astro` — social links from profile data
 - [x] `ThemeToggle.tsx` — light/dark persisted in localStorage, SSR-safe
 - [x] `Avatar.tsx` — state machine (idle/greeting/guiding/speaking/paused/collapsed), guide panel with 5 topics, screen reader announcements, Escape dismissal, IntersectionObserver pause
-- [x] `src/pages/index.astro` — hero with photo + avatar, skills grid, project stubs, contact section
-- [x] `src/pages/about.astro` — experience timeline, education, skills, certs, awards
-- [x] `src/pages/projects/index.astro` — three project cards with "in development" badge
+- [x] `src/pages/index.astro` — redesigned: large display hero, editorial skills table, "Currently" spotlight, horizontal-rule project list, clean contact section
+- [x] `src/pages/about.astro` — redesigned: editorial two-column timeline, skills table, education list, no card-everywhere
+- [x] `src/pages/projects/index.astro` — redesigned: horizontal-rule list layout, no card grid
 - [x] `src/pages/404.astro` — useful not-found page
 - [x] `public/favicon.svg` — teal "A" monogram
 - [x] `public/robots.txt`

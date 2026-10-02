@@ -9,19 +9,22 @@ import {
   ACHIEVEMENTS,
 } from '../content/profile.ts';
 
-const description = `About Ahmed — PHP and Python developer with experience in CRM systems, workflow automation, RESTful APIs, and data integrations at StudyNet Pty Ltd.`;
+const description = `About Ahmed - PHP and Python developer with experience in CRM systems, workflow automation, RESTful APIs, and data integrations at StudyNet Pty Ltd.`;
 ---
 
 <BaseLayout title="About" description={description}>
+
   <!-- ── Hero ── -->
   <section class="about-hero section-sm" aria-labelledby="about-heading">
     <div class="container about-hero-inner">
-      <div>
-        <p class="eyebrow">About me</p>
-        <h1 id="about-heading">Building applications<br/><span class="text-accent">that actually work.</span></h1>
-        <p class="hero-body">{PROFILE.summary}</p>
 
-        <div class="about-hero-actions">
+      <div class="about-hero-text">
+        <h1 id="about-heading" class="about-h1">
+          Building applications<br/>that work.
+        </h1>
+        <p class="about-summary">{PROFILE.summary}</p>
+
+        <div class="about-actions">
           {PROFILE.resumePath && (
             <a
               href={PROFILE.resumePath}
@@ -29,19 +32,17 @@ const description = `About Ahmed — PHP and Python developer with experience in
               target="_blank"
               rel="noopener noreferrer"
               download
-            >
-              Download résumé
-            </a>
+            >Download résumé</a>
           )}
           <a href={`mailto:${PROFILE.email}`} class="btn btn-outline">Send email</a>
         </div>
       </div>
 
-      <div class="about-photo-frame" aria-hidden="true">
+      <div class="about-photo-wrap" aria-hidden="true">
         <img
           src={PROFILE.profileImage}
           alt=""
-          width="280"
+          width="240"
           height="280"
           loading="lazy"
           class="about-photo"
@@ -53,59 +54,22 @@ const description = `About Ahmed — PHP and Python developer with experience in
   <!-- ── Experience ── -->
   <section class="section" aria-labelledby="exp-heading">
     <div class="container">
-      <h2 id="exp-heading" class="section-heading">Work Experience</h2>
+      <h2 id="exp-heading" class="page-section-title">Experience</h2>
 
-      <ol class="timeline" reversed>
+      <div class="exp-list">
         {EXPERIENCE.map((job, i) => (
-          <li class="timeline-item">
-            <div class="timeline-marker" aria-hidden="true">
-              <span class="timeline-dot"></span>
-              {i < EXPERIENCE.length - 1 && <span class="timeline-line"></span>}
+          <div class:list={['exp-item', { 'exp-item--current': i === 0 }]}>
+            <div class="exp-meta">
+              <time class="exp-period">{job.period}</time>
+              {i === 0 && <span class="exp-current-badge">Current</span>}
             </div>
-            <div class="timeline-content card">
-              <div class="timeline-header">
-                <div>
-                  <h3 class="timeline-title">{job.title}</h3>
-                  <p class="timeline-meta">
-                    <span class="timeline-company">{job.company}</span>
-                    <span class="timeline-sep" aria-hidden="true">·</span>
-                    <span class="timeline-location">{job.location}</span>
-                  </p>
-                </div>
-                <time class="timeline-period badge">{job.period}</time>
-              </div>
-              <ul class="timeline-highlights">
+            <div class="exp-content">
+              <h3 class="exp-title">{job.title}</h3>
+              <p class="exp-org">{job.company} &nbsp;·&nbsp; {job.location}</p>
+              <ul class="exp-highlights">
                 {job.highlights.map(h => <li>{h}</li>)}
               </ul>
             </div>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- ── Education ── -->
-  <section class="section-sm" style="background: var(--color-bg-secondary);" aria-labelledby="edu-heading">
-    <div class="container">
-      <h2 id="edu-heading" class="section-heading">Education</h2>
-
-      <div class="edu-grid">
-        {EDUCATION.map(edu => (
-          <div class="card edu-card">
-            <div class="edu-header">
-              <div>
-                <h3 class="edu-institution">{edu.institution}</h3>
-                <p class="edu-location text-secondary">{edu.location}</p>
-              </div>
-              <time class="badge">{edu.period}</time>
-            </div>
-            <p class="edu-qualification">{edu.qualification}</p>
-            <p class="edu-result text-accent">{edu.result}</p>
-            {edu.awards.length > 0 && (
-              <ul class="edu-awards">
-                {edu.awards.map(a => <li>🏆 {a}</li>)}
-              </ul>
-            )}
           </div>
         ))}
       </div>
@@ -113,47 +77,73 @@ const description = `About Ahmed — PHP and Python developer with experience in
   </section>
 
   <!-- ── Skills ── -->
-  <section class="section-sm" aria-labelledby="skills-heading">
+  <section class="section-sm skills-section" aria-labelledby="skills-heading">
     <div class="container">
-      <h2 id="skills-heading" class="section-heading">Technical Skills</h2>
-      <p class="section-sub-sm">Capabilities grouped by category. No made-up proficiency percentages.</p>
+      <h2 id="skills-heading" class="page-section-title">Skills</h2>
+      <p class="section-note">No invented proficiency percentages - capabilities grouped by category.</p>
 
-      <div class="skills-grid">
+      <div class="skills-table" role="table" aria-label="Technical skills by category">
         {SKILLS.map(group => (
-          <div class="skill-group card">
-            <h3 class="skill-group-title">{group.category}</h3>
-            <ul class="skill-tags" role="list">
-              {group.items.map(item => (
-                <li><span class="badge badge-accent">{item}</span></li>
-              ))}
-            </ul>
+          <div class="skill-row" role="row">
+            <span class="skill-label" role="rowheader">{group.category}</span>
+            <span class="skill-value" role="cell">{group.items.join(' · ')}</span>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ── Certifications & Achievements ── -->
-  <section class="section-sm" style="background: var(--color-bg-secondary);" aria-labelledby="certs-heading">
+  <!-- ── Education ── -->
+  <section class="section-sm edu-section" aria-labelledby="edu-heading">
+    <div class="container">
+      <h2 id="edu-heading" class="page-section-title">Education</h2>
+
+      <div class="edu-list">
+        {EDUCATION.map(edu => (
+          <div class="edu-item">
+            <div class="edu-meta">
+              <time class="exp-period">{edu.period}</time>
+            </div>
+            <div class="edu-content">
+              <h3 class="edu-institution">{edu.institution}</h3>
+              <p class="edu-location">{edu.location}</p>
+              <p class="edu-qual">{edu.qualification}</p>
+              <p class="edu-result">{edu.result}</p>
+              {edu.awards.length > 0 && (
+                <ul class="edu-awards">
+                  {edu.awards.map(a => <li>{a}</li>)}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Certifications & Awards ── -->
+  <section class="section-sm" aria-labelledby="certs-heading">
     <div class="container certs-grid">
       <div>
-        <h2 id="certs-heading" class="section-heading">Certifications</h2>
-        <ul class="list-plain">
-          {CERTIFICATIONS.map(c => <li class="list-item">📜 {c}</li>)}
+        <h2 id="certs-heading" class="page-section-title">Certifications</h2>
+        <ul class="plain-list">
+          {CERTIFICATIONS.map(c => <li>{c}</li>)}
         </ul>
       </div>
       <div>
-        <h2 class="section-heading">Awards</h2>
-        <ul class="list-plain">
-          {ACHIEVEMENTS.map(a => <li class="list-item">🏆 {a}</li>)}
+        <h2 class="page-section-title">Awards</h2>
+        <ul class="plain-list">
+          {ACHIEVEMENTS.map(a => <li>{a}</li>)}
         </ul>
       </div>
     </div>
   </section>
+
 </BaseLayout>
 
 <style>
-/* ── Hero ── */
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+
 .about-hero {
   border-bottom: 1px solid var(--color-border);
 }
@@ -165,42 +155,41 @@ const description = `About Ahmed — PHP and Python developer with experience in
   align-items: center;
 }
 
-.eyebrow {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-accent);
-  margin-bottom: var(--space-3);
-}
-
-h1 {
+.about-h1 {
   font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
   margin-bottom: var(--space-5);
   line-height: 1.15;
 }
 
-.hero-body {
+.about-summary {
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
-  max-width: 54ch;
+  max-width: 52ch;
   margin-bottom: var(--space-8);
 }
 
-.about-hero-actions {
+.about-actions {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
 }
 
-.about-photo-frame {
-  width: 220px;
-  height: 220px;
+.about-photo-wrap {
+  position: relative;
+  width: 200px;
+  height: 240px;
   border-radius: var(--radius-2xl);
-  overflow: hidden;
-  border: 2px solid var(--color-border);
   flex-shrink: 0;
+}
+
+.about-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--radius-2xl) + 3px);
+  background: var(--gradient-accent);
+  z-index: -1;
 }
 
 .about-photo {
@@ -208,137 +197,195 @@ h1 {
   height: 100%;
   object-fit: cover;
   object-position: center top;
+  border-radius: var(--radius-2xl);
+  display: block;
 }
 
-/* ── Section headings ── */
-.section-heading {
-  font-size: clamp(var(--text-2xl), 3vw, var(--text-3xl));
-  margin-bottom: var(--space-8);
+/* ── Section typography ──────────────────────────────────────────────── */
+
+.page-section-title {
+  font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));
+  font-weight: var(--font-bold);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-6);
 }
 
-.section-sub-sm {
-  color: var(--color-text-secondary);
-  margin-top: calc(-1 * var(--space-5));
-  margin-bottom: var(--space-8);
+.section-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  margin-top: calc(-1 * var(--space-4));
+  margin-bottom: var(--space-6);
+  max-width: none;
 }
 
-/* ── Timeline ── */
-.timeline {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* ── Experience ──────────────────────────────────────────────────────── */
+
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-8);
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.exp-item--current .exp-title {
+  color: var(--color-text-primary);
+}
+
+.exp-item--current::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gradient-accent);
+  border-radius: 0 2px 2px 0;
+}
+
+.exp-meta {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding-top: 0.2rem;
 }
 
-.timeline-item {
-  display: flex;
-  gap: var(--space-5);
+.exp-period {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  line-height: var(--leading-snug);
 }
 
-.timeline-marker {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  padding-top: var(--space-6);
+.exp-current-badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-border);
+  width: fit-content;
 }
 
-.timeline-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  flex-shrink: 0;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-teal) 20%, transparent);
-}
-
-.timeline-line {
-  width: 2px;
-  flex: 1;
-  background: var(--color-border);
-  margin-top: var(--space-2);
-  min-height: var(--space-4);
-}
-
-.timeline-content {
-  flex: 1;
-  margin-bottom: var(--space-4);
-}
-
-.timeline-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-4);
-  margin-bottom: var(--space-4);
-  flex-wrap: wrap;
-}
-
-.timeline-title {
+.exp-title {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
+  letter-spacing: -0.02em;
   margin-bottom: var(--space-1);
 }
 
-.timeline-meta {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
+.exp-org {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-4);
+  max-width: none;
 }
 
-.timeline-sep { color: var(--color-text-tertiary); }
-.timeline-period { flex-shrink: 0; font-size: var(--text-xs); }
-
-.timeline-highlights {
+.exp-highlights {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-left: var(--space-5);
+  padding-left: var(--space-4);
 }
 
-.timeline-highlights li {
+.exp-highlights li {
   font-size: var(--text-sm);
-  line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
 }
 
-/* ── Education ── */
-.edu-grid {
+/* ── Skills (table) ──────────────────────────────────────────────────── */
+
+.skills-section {
+  background: var(--color-bg-secondary);
+  border-block: 1px solid var(--color-border);
+}
+
+.skills-table {
+  border-top: 1px solid var(--color-border);
+}
+
+.skill-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-6);
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-8);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  align-items: baseline;
 }
 
-.edu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-4);
-  margin-bottom: var(--space-3);
-  flex-wrap: wrap;
+.skill-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  line-height: var(--leading-relaxed);
+}
+
+.skill-value {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Education ───────────────────────────────────────────────────────── */
+
+.edu-section {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.edu-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.edu-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-8);
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .edu-institution {
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-1);
 }
 
-.edu-location { font-size: var(--text-sm); }
+.edu-location {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-3);
+  max-width: none;
+}
 
-.edu-qualification {
+.edu-qual {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   margin-bottom: var(--space-2);
 }
 
 .edu-result {
-  font-weight: var(--font-semibold);
   font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-accent);
   margin-bottom: var(--space-3);
+  max-width: none;
 }
 
 .edu-awards {
@@ -351,64 +398,66 @@ h1 {
 
 .edu-awards li {
   font-size: var(--text-xs);
+  font-family: var(--font-mono);
   color: var(--color-text-secondary);
 }
 
-/* ── Skills ── */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--space-4);
-}
+/* ── Certifications ──────────────────────────────────────────────────── */
 
-.skill-group-title {
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--color-text-tertiary);
-  margin-bottom: var(--space-3);
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* ── Certs ── */
 .certs-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-12);
 }
 
-.list-plain {
+.plain-list {
   list-style: none;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
 }
 
-.list-item {
+.plain-list li {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
   line-height: var(--leading-relaxed);
 }
 
-/* ── Responsive ── */
+/* ── Responsive ──────────────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .about-hero-inner {
     grid-template-columns: 1fr;
   }
 
-  .about-photo-frame {
-    width: 140px;
-    height: 140px;
+  .about-photo-wrap {
+    width: 150px;
+    height: 180px;
+    order: -1;
+    margin-inline: auto;
+  }
+
+  .exp-item {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .exp-item--current::before {
+    display: none;
+  }
+
+  .exp-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .edu-item {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
   }
 
   .certs-grid {
@@ -416,12 +465,9 @@ h1 {
     gap: var(--space-8);
   }
 
-  .timeline-marker {
-    display: none;
-  }
-
-  .timeline-item {
-    gap: 0;
+  .skill-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
   }
 }
 </style>

@@ -88,9 +88,9 @@
 }
 
 .guide-btn--active {
-  background-color: color-mix(in srgb, var(--color-teal) 12%, transparent);
-  color: var(--color-teal-dim);
-  border-color: var(--color-teal);
+  background-color: var(--color-accent-muted);
+  color: var(--color-accent);
+  border-color: var(--color-accent-border);
 }
 
 /* ── Answer ── */
