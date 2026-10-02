@@ -276,3 +276,40 @@ li { line-height: var(--leading-relaxed); }
   background: var(--color-accent-muted);
   color: var(--color-text-primary);
 }
+
+/* ─── Animations ────────────────────────────────────────────────────────── */
+
+/* Hero entrance — single orchestrated page-load sequence */
+@keyframes enter-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes enter-right {
+  from { opacity: 0; transform: translateX(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Scroll-reveal: elements start invisible, become visible when they enter viewport */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Stagger support — set --i on elements to delay */
+  .reveal-d1 { transition-delay: 80ms; }
+  .reveal-d2 { transition-delay: 160ms; }
+  .reveal-d3 { transition-delay: 240ms; }
+  .reveal-d4 { transition-delay: 320ms; }
+  .reveal-d5 { transition-delay: 400ms; }
+}
+

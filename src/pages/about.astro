@@ -19,12 +19,12 @@ const description = `About Ahmed - PHP and Python developer with experience in C
     <div class="container about-hero-inner">
 
       <div class="about-hero-text">
-        <h1 id="about-heading" class="about-h1">
+        <h1 id="about-heading" class="about-h1 page-anim-1">
           Building applications<br/>that work.
         </h1>
-        <p class="about-summary">{PROFILE.summary}</p>
+        <p class="about-summary page-anim-2">{PROFILE.summary}</p>
 
-        <div class="about-actions">
+        <div class="about-actions page-anim-3">
           {PROFILE.resumePath && (
             <a
               href={PROFILE.resumePath}
@@ -54,11 +54,14 @@ const description = `About Ahmed - PHP and Python developer with experience in C
   <!-- ── Experience ── -->
   <section class="section" aria-labelledby="exp-heading">
     <div class="container">
-      <h2 id="exp-heading" class="page-section-title">Experience</h2>
+      <h2 id="exp-heading" class="page-section-title reveal">Experience</h2>
 
       <div class="exp-list">
         {EXPERIENCE.map((job, i) => (
-          <div class:list={['exp-item', { 'exp-item--current': i === 0 }]}>
+          <div
+            class:list={['exp-item', 'reveal', { 'exp-item--current': i === 0 }]}
+            style={`transition-delay: ${i * 100}ms`}
+          >
             <div class="exp-meta">
               <time class="exp-period">{job.period}</time>
               {i === 0 && <span class="exp-current-badge">Current</span>}
@@ -79,10 +82,10 @@ const description = `About Ahmed - PHP and Python developer with experience in C
   <!-- ── Skills ── -->
   <section class="section-sm skills-section" aria-labelledby="skills-heading">
     <div class="container">
-      <h2 id="skills-heading" class="page-section-title">Skills</h2>
-      <p class="section-note">No invented proficiency percentages - capabilities grouped by category.</p>
+      <h2 id="skills-heading" class="page-section-title reveal">Skills</h2>
+      <p class="section-note reveal reveal-d1">No invented proficiency percentages - capabilities grouped by category.</p>
 
-      <div class="skills-table" role="table" aria-label="Technical skills by category">
+      <div class="skills-table reveal reveal-d2" role="table" aria-label="Technical skills by category">
         {SKILLS.map(group => (
           <div class="skill-row" role="row">
             <span class="skill-label" role="rowheader">{group.category}</span>
@@ -96,11 +99,11 @@ const description = `About Ahmed - PHP and Python developer with experience in C
   <!-- ── Education ── -->
   <section class="section-sm edu-section" aria-labelledby="edu-heading">
     <div class="container">
-      <h2 id="edu-heading" class="page-section-title">Education</h2>
+      <h2 id="edu-heading" class="page-section-title reveal">Education</h2>
 
       <div class="edu-list">
-        {EDUCATION.map(edu => (
-          <div class="edu-item">
+        {EDUCATION.map((edu, i) => (
+          <div class="edu-item reveal" style={`transition-delay: ${i * 100}ms`}>
             <div class="edu-meta">
               <time class="exp-period">{edu.period}</time>
             </div>
@@ -122,7 +125,7 @@ const description = `About Ahmed - PHP and Python developer with experience in C
   </section>
 
   <!-- ── Certifications & Awards ── -->
-  <section class="section-sm" aria-labelledby="certs-heading">
+  <section class="section-sm reveal" aria-labelledby="certs-heading">
     <div class="container certs-grid">
       <div>
         <h2 id="certs-heading" class="page-section-title">Certifications</h2>
@@ -142,6 +145,14 @@ const description = `About Ahmed - PHP and Python developer with experience in C
 </BaseLayout>
 
 <style>
+/* ── Page entrance animations ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-anim-1 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.05s; }
+  .page-anim-2 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.18s; }
+  .page-anim-3 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.3s;  }
+}
+
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 .about-hero {
@@ -238,17 +249,6 @@ const description = `About Ahmed - PHP and Python developer with experience in C
 
 .exp-item--current .exp-title {
   color: var(--color-text-primary);
-}
-
-.exp-item--current::before {
-  content: '';
-  position: absolute;
-  left: -1px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--gradient-accent);
-  border-radius: 0 2px 2px 0;
 }
 
 .exp-meta {

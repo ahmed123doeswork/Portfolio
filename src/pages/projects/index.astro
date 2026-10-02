@@ -55,16 +55,17 @@ const projects = [
     <div class="container">
 
       <div class="projects-intro-block">
-        <h1 id="projects-heading" class="projects-h1">Projects</h1>
-        <p class="projects-intro">
+        <h1 id="projects-heading" class="projects-h1 page-anim-1">Projects</h1>
+        <p class="projects-intro page-anim-2">
           Three focused backend engineering case studies across different languages and frameworks. Each demonstrates real domain logic, tests, and an interactive browser simulation. Source code and Docker Compose startup instructions included.
         </p>
       </div>
 
       <div class="project-list" role="list">
-        {projects.map(project => (
+        {projects.map((project, i) => (
           <article
-            class="project-item"
+            class="project-item reveal"
+            style={`transition-delay: ${i * 120}ms`}
             role="listitem"
             aria-labelledby={`project-${project.id}-title`}
           >
@@ -100,6 +101,13 @@ const projects = [
 </BaseLayout>
 
 <style>
+/* ── Page entrance animations ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-anim-1 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.05s; }
+  .page-anim-2 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.18s; }
+}
+
 .projects-intro-block {
   max-width: 60ch;
   margin-bottom: var(--space-12);
@@ -128,21 +136,6 @@ const projects = [
   border-bottom: 1px solid var(--color-border);
   display: grid;
   gap: var(--space-4);
-}
-
-.project-item:first-of-type {
-  position: relative;
-}
-
-.project-item:first-of-type::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -1px;
-  bottom: 0;
-  width: 3px;
-  background: var(--gradient-accent);
-  border-radius: 0 2px 2px 0;
 }
 
 .project-top {

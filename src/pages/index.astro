@@ -15,13 +15,13 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
     <div class="container hero-inner">
 
       <div class="hero-text">
-        <h1 id="hero-heading" class="hero-display">
+        <h1 id="hero-heading" class="hero-display hero-anim-1">
           Ahmed
         </h1>
-        <p class="hero-stack">{PROFILE.headline}</p>
-        <p class="hero-body">{PROFILE.summary}</p>
+        <p class="hero-stack hero-anim-2">{PROFILE.headline}</p>
+        <p class="hero-body hero-anim-3">{PROFILE.summary}</p>
 
-        <div class="hero-actions">
+        <div class="hero-actions hero-anim-4">
           <a href="/projects" class="btn btn-primary">See projects</a>
           <a href="#contact"  class="btn btn-outline">Get in touch</a>
           {PROFILE.resumePath && (
@@ -42,7 +42,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
           )}
         </div>
 
-        <div class="hero-meta">
+        <div class="hero-meta hero-anim-5">
           <span>{PROFILE.location}</span>
           <span class="hero-meta-sep" aria-hidden="true">·</span>
           <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer">StudyNet</a>
@@ -51,7 +51,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
         </div>
       </div>
 
-      <div class="hero-photo-wrap" aria-hidden="true">
+      <div class="hero-photo-wrap hero-anim-photo" aria-hidden="true">
         <img
           src={PROFILE.profileImage}
           alt="Photo of Ahmed"
@@ -66,7 +66,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
   </section>
 
   <!-- ── Currently ── -->
-  <section class="current-section" aria-labelledby="current-heading">
+  <section class="current-section reveal" aria-labelledby="current-heading">
     <div class="container">
       <div class="current-inner">
         <div class="current-label-col">
@@ -88,9 +88,9 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
   <!-- ── Skills ── -->
   <section class="skills-section section-sm" aria-labelledby="skills-heading">
     <div class="container">
-      <h2 id="skills-heading" class="section-title">Skills</h2>
+      <h2 id="skills-heading" class="section-title reveal">Skills</h2>
 
-      <div class="skills-table" role="table" aria-label="Technical skills by category">
+      <div class="skills-table reveal reveal-d1" role="table" aria-label="Technical skills by category">
         {SKILLS.map(group => (
           <div class="skill-row" role="row">
             <span class="skill-label" role="rowheader">{group.category}</span>
@@ -116,7 +116,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
 
       <div class="project-list">
 
-        <article class="project-item" aria-labelledby="proj-workflowdesk">
+        <article class="project-item reveal" aria-labelledby="proj-workflowdesk">
           <div class="project-row">
             <div class="project-info">
               <h3 id="proj-workflowdesk" class="project-name">WorkflowDesk</h3>
@@ -133,7 +133,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
           </div>
         </article>
 
-        <article class="project-item" aria-labelledby="proj-databridge">
+        <article class="project-item reveal reveal-d1" aria-labelledby="proj-databridge">
           <div class="project-row">
             <div class="project-info">
               <h3 id="proj-databridge" class="project-name">DataBridge Inspector</h3>
@@ -150,7 +150,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
           </div>
         </article>
 
-        <article class="project-item" aria-labelledby="proj-timeslot">
+        <article class="project-item reveal reveal-d2" aria-labelledby="proj-timeslot">
           <div class="project-row">
             <div class="project-info">
               <h3 id="proj-timeslot" class="project-name">TimeSlot</h3>
@@ -172,7 +172,7 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
   </section>
 
   <!-- ── Contact ── -->
-  <section class="contact-section section" id="contact" aria-labelledby="contact-heading">
+  <section class="contact-section section reveal" id="contact" aria-labelledby="contact-heading">
     <div class="container contact-inner">
 
       <div class="contact-text">
@@ -221,6 +221,17 @@ const description = `Ahmed - software engineer building CRM systems, REST APIs, 
 </BaseLayout>
 
 <style>
+/* ── Hero entrance animations ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-anim-1 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.05s; }
+  .hero-anim-2 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.18s; }
+  .hero-anim-3 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.3s;  }
+  .hero-anim-4 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.42s; }
+  .hero-anim-5 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.52s; }
+  .hero-anim-photo { animation: enter-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.1s; }
+}
+
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 
 .hero {
