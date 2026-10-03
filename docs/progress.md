@@ -9,7 +9,7 @@ Last updated: 2026-10-01 (UI/UX redesign completed)
 | 0. Grounding | ✅ Complete | Resume extracted; content gaps documented; hosting plan noted |
 | 1. Portfolio shell | 🟡 In progress | All pages scaffolded; dependencies not yet installed |
 | 2. Avatar and browser demo | 🟡 Partial | Avatar component built; browser demo for projects not started |
-| 3. WorkflowDesk backend | 🔴 Not started | |
+| 3. WorkflowDesk | 🟢 Hosted demo and public source linked (2026-10-03) | Linked from /projects and home. Hosted app runs in browser mode (no server calls, checked in headless Chrome). Repo is public; its latest CI run passed (GitHub Actions API); 66 backend tests per its README, not re-run locally (no PHP installed here). No live API is hosted |
 | 4. DataBridge | 🔴 Not started | |
 | 5. TimeSlot | 🔴 Not started | |
 | 6. Publication | 🔴 Not started | |

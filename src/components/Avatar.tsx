@@ -65,7 +65,7 @@ const GUIDE_ITEMS: GuideItem[] = [
   {
     id: 'projects',
     label: 'Show backend projects',
-    answer: 'Three backend-focused projects are showcased here: TimeSlot (C# / ASP.NET Core + React + PostgreSQL — timezone-aware booking with concurrency control), DataBridge Inspector (Python / FastAPI + React — CSV normalisation with duplicate detection), and WorkflowDesk (PHP / Laravel + Vue + MySQL — multi-tenant enquiry management with audit history).',
+    answer: 'Three backend-focused projects are showcased here: TimeSlot (C# / ASP.NET Core + React + PostgreSQL — timezone-aware booking with concurrency control), DataBridge Inspector (Python / FastAPI + React — CSV normalisation with duplicate detection), and WorkflowDesk (PHP / Laravel + Vue + MySQL — multi-tenant enquiry management with roles and SLA tracking). WorkflowDesk has a hosted demo and public source on GitHub; the other two are in development.',
     link: { href: '/projects', text: 'Browse projects →' },
   },
   {

@@ -1,25 +1,35 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL } from '../../content/profile.ts';
 
 const projects = [
   {
     id: 'workflowdesk',
     name: 'WorkflowDesk',
-    status: 'in-development' as const,
+    status: 'demo' as const,
+    demoUrl: WORKFLOWDESK_DEMO_URL,
+    sourceUrl: WORKFLOWDESK_SOURCE_URL,
     stack: ['PHP', 'Laravel', 'Vue', 'TypeScript', 'MySQL'],
     description:
-      'Multi-tenant enquiry management system with role-based access control, configurable state transitions, and a complete audit history. Backend-enforced tenant isolation using Laravel policies and transactional state changes.',
+      'A multi-tenant enquiry queue for admissions and support teams: a Laravel 13 API with a Vue 3 and TypeScript front end. It is built around what enterprise teams ask about: tenant isolation, concurrent edits, an auditable history and SLA deadlines.',
     highlights: [
-      'Server-enforced tenant and role boundaries',
-      'Transactional state changes with audit events',
-      'Pagination and filter state preserved on navigation',
-      'Stale-update conflict handling',
+      'Two synthetic organisations with admin, counsellor and viewer roles. Every query is scoped to the caller\u2019s organisation, so another organisation\u2019s record returns 404',
+      'Optimistic locking over HTTP: each change needs an If-Match header, and a stale write gets a 412 and overwrites nothing',
+      'Tamper-evident audit log: each entry hashes the one before it, is written in the same transaction as the change, and a database trigger blocks edits and deletes. An endpoint verifies the chain',
+      'SLA engine: deadlines follow each organisation\u2019s business hours and time zone, including daylight-saving changes, and a scheduled command flags enquiries that are at risk or breached',
+      '66 backend tests run against a real MySQL 8.4 in CI, and architecture decision records explain the non-obvious choices',
+      'The front end talks to the API through a typed adapter with live, browser-demo and unavailable modes',
     ],
+    demoNote:
+      'The hosted demo runs entirely in your browser on built-in sample data and makes no server calls. The Laravel API, its tests and its decision records are in the repository, and run locally with the steps in its README. Pick any demo account on the sign-in page, then press Sign in.',
   },
   {
     id: 'databridge',
     name: 'DataBridge Inspector',
     status: 'in-development' as const,
+    demoUrl: null,
+    sourceUrl: null,
+    demoNote: null,
     stack: ['Python', 'FastAPI', 'React', 'TypeScript'],
     description:
       'Contact data normalisation tool that maps CSV columns, validates required fields, detects and explains duplicates, and exports a cleaned file. Input limits enforced; original values always preserved alongside proposed changes.',
@@ -34,6 +44,9 @@ const projects = [
     id: 'timeslot',
     name: 'TimeSlot',
     status: 'in-development' as const,
+    demoUrl: null,
+    sourceUrl: null,
+    demoNote: null,
     stack: ['C#', 'ASP.NET Core', 'React', 'TypeScript', 'PostgreSQL'],
     description:
       'Timezone-aware appointment booking that stores UTC instants with IANA zone identifiers, prevents overlapping bookings via database constraints, and implements idempotent booking and atomic rescheduling.',
@@ -49,7 +62,7 @@ const projects = [
 
 <BaseLayout
   title="Projects"
-  description="Backend engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core - with real architecture, tests, and browser demos."
+  description="Engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk has a hosted demo and public source."
 >
   <section class="section" aria-labelledby="projects-heading">
     <div class="container">
@@ -57,13 +70,14 @@ const projects = [
       <div class="projects-intro-block">
         <h1 id="projects-heading" class="projects-h1 page-anim-1">Projects</h1>
         <p class="projects-intro page-anim-2">
-          Three focused backend engineering case studies across different languages and frameworks. Each demonstrates real domain logic, tests, and an interactive browser simulation. Source code and Docker Compose startup instructions included.
+          Three focused projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk has a hosted demo and public source code; the other two are still in development.
         </p>
       </div>
 
       <div class="project-list" role="list">
         {projects.map((project, i) => (
           <article
+            id={project.id}
             class="project-item reveal"
             style={`transition-delay: ${i * 120}ms`}
             role="listitem"
@@ -74,7 +88,9 @@ const projects = [
                 <h2 id={`project-${project.id}-title`} class="project-name">
                   {project.name}
                 </h2>
-                <span class="project-status">In development</span>
+                {project.status === 'demo'
+                  ? <span class="project-status project-status--live">Hosted demo</span>
+                  : <span class="project-status">In development</span>}
               </div>
               <div class="project-stack">
                 {project.stack.map(s => <span class="badge">{s}</span>)}
@@ -87,13 +103,33 @@ const projects = [
               {project.highlights.map(h => <li>{h}</li>)}
             </ul>
 
-            <p class="project-coming">Case study and browser demo coming soon.</p>
+            {project.demoUrl ? (
+              <div class="project-demo">
+                <div class="project-demo-actions">
+                  <a href={project.demoUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    Open the hosted demo
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                    <span class="visually-hidden">(opens in a new tab)</span>
+                  </a>
+                  {project.sourceUrl && (
+                    <a href={project.sourceUrl} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                      View source on GitHub
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                      <span class="visually-hidden">(opens in a new tab)</span>
+                    </a>
+                  )}
+                </div>
+                <p class="project-demo-note">{project.demoNote}</p>
+              </div>
+            ) : (
+              <p class="project-coming">Case study and browser demo coming soon.</p>
+            )}
           </article>
         ))}
       </div>
 
       <div class="projects-footer-note">
-        Projects are built independently to demonstrate backend engineering across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. Each will include architecture notes and test coverage.
+        Projects are built independently. No source link is shown for a project until its repository is public.
       </div>
 
     </div>
@@ -132,6 +168,7 @@ const projects = [
 }
 
 .project-item {
+  scroll-margin-top: calc(var(--nav-height) + var(--space-4));
   padding-block: var(--space-10);
   border-bottom: 1px solid var(--color-border);
   display: grid;
@@ -182,6 +219,45 @@ const projects = [
     background: rgba(251, 191, 36, 0.1);
     border-color: rgba(251, 191, 36, 0.2);
   }
+}
+
+.project-status--live {
+  background: color-mix(in srgb, #059669 12%, transparent);
+  color: #047857;
+  border-color: color-mix(in srgb, #059669 28%, transparent);
+}
+
+:global([data-theme="dark"]) .project-status--live {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .project-status--live {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.1);
+    border-color: rgba(52, 211, 153, 0.22);
+  }
+}
+
+.project-demo {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  margin-top: var(--space-2);
+}
+
+.project-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.project-demo-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  max-width: 62ch;
 }
 
 .project-stack {
