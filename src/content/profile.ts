@@ -131,3 +131,7 @@ export const ACHIEVEMENTS = [
 // Hosted WorkflowDesk demo (browser mode). Link to the site root: direct loads of /login return 404 until the host adds an SPA rewrite.
 export const WORKFLOWDESK_DEMO_URL = 'https://workflow-desk-sigma.vercel.app/';
 export const WORKFLOWDESK_SOURCE_URL = 'https://github.com/ahmed123doeswork/WorkflowDesk';
+
+// Hosted DataBridge Inspector demo (browser mode).
+export const DATABRIDGE_DEMO_URL = 'https://databridge-inpector.vercel.app/';
+export const DATABRIDGE_SOURCE_URL = 'https://github.com/ahmed123doeswork/DatabridgeInpector';

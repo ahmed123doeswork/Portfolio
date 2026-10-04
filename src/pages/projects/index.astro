@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL } from '../../content/profile.ts';
+import { WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL } from '../../content/profile.ts';
 
 const projects = [
   {
@@ -26,10 +26,9 @@ const projects = [
   {
     id: 'databridge',
     name: 'DataBridge Inspector',
-    status: 'in-development' as const,
-    demoUrl: null,
-    sourceUrl: null,
-    demoNote: null,
+    status: 'demo' as const,
+    demoUrl: DATABRIDGE_DEMO_URL,
+    sourceUrl: DATABRIDGE_SOURCE_URL,
     stack: ['Python', 'FastAPI', 'React', 'TypeScript'],
     description:
       'Contact data normalisation tool that maps CSV columns, validates required fields, detects and explains duplicates, and exports a cleaned file. Input limits enforced; original values always preserved alongside proposed changes.',
@@ -39,6 +38,8 @@ const projects = [
       'Safe CSV export with formula injection protection',
       'File-size and row-count limits enforced',
     ],
+    demoNote:
+      'The hosted demo runs in your browser on synthetic sample data. The FastAPI backend and its source are in the repository and run locally with the steps in its README.',
   },
   {
     id: 'timeslot',
@@ -62,7 +63,7 @@ const projects = [
 
 <BaseLayout
   title="Projects"
-  description="Engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk has a hosted demo and public source."
+  description="Engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk and DataBridge Inspector have hosted demos and public source."
 >
   <section class="section" aria-labelledby="projects-heading">
     <div class="container">
@@ -70,7 +71,7 @@ const projects = [
       <div class="projects-intro-block">
         <h1 id="projects-heading" class="projects-h1 page-anim-1">Projects</h1>
         <p class="projects-intro page-anim-2">
-          Three focused projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk has a hosted demo and public source code; the other two are still in development.
+          Three focused projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. WorkflowDesk and DataBridge Inspector have hosted demos and public source code; TimeSlot is still in development.
         </p>
       </div>
 

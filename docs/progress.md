@@ -1,6 +1,6 @@
 # Portfolio Build Progress
 
-Last updated: 2026-10-01 (UI/UX redesign completed)
+Last updated: 2026-10-04 (DataBridge Inspector hosted demo and source linked)
 
 ## Phase status
 
@@ -10,7 +10,7 @@ Last updated: 2026-10-01 (UI/UX redesign completed)
 | 1. Portfolio shell | 🟡 In progress | All pages scaffolded; dependencies not yet installed |
 | 2. Avatar and browser demo | 🟡 Partial | Avatar component built; browser demo for projects not started |
 | 3. WorkflowDesk | 🟢 Hosted demo and public source linked (2026-10-03) | Linked from /projects and home. Hosted app runs in browser mode (no server calls, checked in headless Chrome). Repo is public; its latest CI run passed (GitHub Actions API); 66 backend tests per its README, not re-run locally (no PHP installed here). No live API is hosted |
-| 4. DataBridge | 🔴 Not started | |
+| 4. DataBridge | 🟢 Hosted demo and public source linked (2026-10-04) | Linked from /projects and home. Hosted app is a deployed React/Vite SPA (verified: served HTML references a built `index-*.js`/`index-*.css` bundle); demo runs in browser mode on synthetic fixtures. Repo is public (verified via GitHub API: `private: false`). FastAPI backend source and tests not yet re-run locally |
 | 5. TimeSlot | 🔴 Not started | |
 | 6. Publication | 🔴 Not started | |
 
