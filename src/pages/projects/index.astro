@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL, TIMESLOT_DEMO_URL, TIMESLOT_SOURCE_URL } from '../../content/profile.ts';
+import { WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL, TIMESLOT_DEMO_URL, TIMESLOT_SOURCE_URL, MUSICITY_SOURCE_URL } from '../../content/profile.ts';
 
 const projects = [
   {
@@ -59,12 +59,25 @@ const projects = [
     demoNote:
       'The hosted demo runs in your browser on synthetic sample data. The ASP.NET Core backend and its source are in the repository and run locally with the steps in its README.',
   },
+  {
+    id: 'musicity',
+    name: 'Musicity',
+    status: 'team' as const,
+    demoUrl: null,
+    sourceUrl: MUSICITY_SOURCE_URL,
+    stack: ['PHP', 'JavaScript', 'CSS'],
+    description:
+      'A 5-person team project: a music platform where creators upload tracks and listeners stream free previews or buy premium songs. Contributed across several front-end and back-end features as part of the team.',
+    highlights: [],
+    demoNote:
+      'This is a teammate’s repository (Tonmoy-saha18), not an independently owned project — shown here as a collaborative contribution, not a solo build. No hosted demo exists.',
+  },
 ];
 ---
 
 <BaseLayout
   title="Projects"
-  description="Engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. Each has a hosted demo and public source."
+  description="Engineering projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core, plus a collaborative team project. Each has a public source link."
 >
   <section class="section" aria-labelledby="projects-heading">
     <div class="container">
@@ -72,7 +85,7 @@ const projects = [
       <div class="projects-intro-block">
         <h1 id="projects-heading" class="projects-h1 page-anim-1">Projects</h1>
         <p class="projects-intro page-anim-2">
-          Three focused projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core. Each has a hosted demo and public source code.
+          Three focused projects across PHP/Laravel, Python/FastAPI, and C#/ASP.NET Core, each with a hosted demo and public source code, plus a collaborative team project below.
         </p>
       </div>
 
@@ -92,6 +105,8 @@ const projects = [
                 </h2>
                 {project.status === 'demo'
                   ? <span class="project-status project-status--live">Hosted demo</span>
+                  : project.status === 'team'
+                  ? <span class="project-status project-status--team">Team project · contributor</span>
                   : <span class="project-status">In development</span>}
               </div>
               <div class="project-stack">
@@ -101,9 +116,11 @@ const projects = [
 
             <p class="project-desc">{project.description}</p>
 
-            <ul class="project-highlights">
-              {project.highlights.map(h => <li>{h}</li>)}
-            </ul>
+            {project.highlights.length > 0 && (
+              <ul class="project-highlights">
+                {project.highlights.map(h => <li>{h}</li>)}
+              </ul>
+            )}
 
             {project.demoUrl ? (
               <div class="project-demo">
@@ -123,6 +140,17 @@ const projects = [
                 </div>
                 <p class="project-demo-note">{project.demoNote}</p>
               </div>
+            ) : project.sourceUrl ? (
+              <div class="project-demo">
+                <div class="project-demo-actions">
+                  <a href={project.sourceUrl} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+                    View team repository on GitHub
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                    <span class="visually-hidden">(opens in a new tab)</span>
+                  </a>
+                </div>
+                <p class="project-demo-note">{project.demoNote}</p>
+              </div>
             ) : (
               <p class="project-coming">Case study and browser demo coming soon.</p>
             )}
@@ -131,7 +159,7 @@ const projects = [
       </div>
 
       <div class="projects-footer-note">
-        Projects are built independently. No source link is shown for a project until its repository is public.
+        WorkflowDesk, DataBridge Inspector, and TimeSlot are built independently. Musicity is a collaborative team project, shown as a contribution rather than a solo build. No source link is shown for a project until its repository is public.
       </div>
 
     </div>
@@ -240,6 +268,26 @@ const projects = [
     color: #34d399;
     background: rgba(52, 211, 153, 0.1);
     border-color: rgba(52, 211, 153, 0.22);
+  }
+}
+
+.project-status--team {
+  background: color-mix(in srgb, #64748b 14%, transparent);
+  color: #475569;
+  border-color: color-mix(in srgb, #64748b 28%, transparent);
+}
+
+:global([data-theme="dark"]) .project-status--team {
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .project-status--team {
+    color: #94a3b8;
+    background: rgba(148, 163, 184, 0.1);
+    border-color: rgba(148, 163, 184, 0.22);
   }
 }
 

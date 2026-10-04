@@ -139,3 +139,6 @@ export const DATABRIDGE_SOURCE_URL = 'https://github.com/ahmed123doeswork/Databr
 // Hosted TimeSlot demo (browser mode).
 export const TIMESLOT_DEMO_URL = 'https://timeslot-inky.vercel.app/';
 export const TIMESLOT_SOURCE_URL = 'https://github.com/ahmed123doeswork/Timeslot';
+
+// Musicity-Beta: a 5-person team/academic project. Owned by a teammate (Tonmoy-saha18), not Ahmed — no demo is hosted.
+export const MUSICITY_SOURCE_URL = 'https://github.com/Tonmoy-saha18/Musicity-Beta';
