@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Avatar from '../components/Avatar.tsx';
-import { PROFILE, SKILLS, EXPERIENCE, WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL } from '../content/profile.ts';
+import { PROFILE, SKILLS, EXPERIENCE, WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL, TIMESLOT_DEMO_URL, TIMESLOT_SOURCE_URL } from '../content/profile.ts';
 
 const currentRole = EXPERIENCE[0];
 
@@ -111,7 +111,7 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
         <a href="/projects" class="btn btn-ghost projects-all">All projects →</a>
       </div>
       <p class="projects-intro">
-        Three focused engineering projects in PHP, Python, and C#. WorkflowDesk and DataBridge Inspector have hosted demos and public source code; TimeSlot is in development.
+        Three focused engineering projects in PHP, Python, and C#. Each has a hosted demo and public source code.
       </p>
 
       <div class="project-list">
@@ -165,7 +165,11 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
               <p class="project-desc">
                 Timezone-aware appointment booking with UTC storage, IANA zone identifiers, database-level conflict protection, and idempotent atomic rescheduling.
               </p>
-              <p class="project-coming">Case study coming soon.</p>
+              <p class="project-coming">
+                <a href={TIMESLOT_DEMO_URL} target="_blank" rel="noopener noreferrer">Open the hosted demo<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
+                &nbsp;·&nbsp; <a href={TIMESLOT_SOURCE_URL} target="_blank" rel="noopener noreferrer">Source on GitHub<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
+                &nbsp;·&nbsp; <a href="/projects#timeslot">Details</a>
+              </p>
             </div>
             <div class="project-stack">
               {['C#', 'ASP.NET Core', 'React', 'PostgreSQL'].map(t => (

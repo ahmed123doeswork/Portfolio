@@ -135,3 +135,7 @@ export const WORKFLOWDESK_SOURCE_URL = 'https://github.com/ahmed123doeswork/Work
 // Hosted DataBridge Inspector demo (browser mode).
 export const DATABRIDGE_DEMO_URL = 'https://databridge-inpector.vercel.app/';
 export const DATABRIDGE_SOURCE_URL = 'https://github.com/ahmed123doeswork/DatabridgeInpector';
+
+// Hosted TimeSlot demo (browser mode).
+export const TIMESLOT_DEMO_URL = 'https://timeslot-inky.vercel.app/';
+export const TIMESLOT_SOURCE_URL = 'https://github.com/ahmed123doeswork/Timeslot';

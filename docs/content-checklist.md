@@ -27,7 +27,7 @@ Items below must be resolved before production deployment. Draft placeholders ar
 |------|--------|
 | WorkflowDesk case study | 🟡 Hosted demo and source linked; a written case study page (problem, tradeoffs, limitations) is still to do |
 | DataBridge Inspector case study | 🟡 Hosted demo and source linked (2026-10-04); a written case study page (problem, tradeoffs, limitations) is still to do |
-| TimeSlot case study | 🔴 Not started — only card stub exists |
+| TimeSlot case study | 🟡 Hosted demo and source linked (2026-10-04); a written case study page (problem, tradeoffs, limitations) is still to do |
 | Any existing GitHub project URL | ⚠️ Missing — resume shows a collaborator repo (Tonmoy-saha18/Musicity), not owner repo |
 
 ## Legal / privacy
