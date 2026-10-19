@@ -16,7 +16,8 @@ Items below must be resolved before production deployment. Draft placeholders ar
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Professional headline | ⚠️ Draft | Current: "PHP · Python · JavaScript developer". Confirm wording. |
+| Professional headline | ⚠️ Draft | Current: "Full-Stack Software Engineer · ASP.NET Core (C#) · React · TypeScript". Confirm wording. |
+| Home hero headline | ⚠️ Draft (2026-10-19) | "Web apps that stay correct when two people press Save at once." Hero feed lines (`src/components/ProofFeed.astro`) restate documented project behaviour — confirm wording. |
 | Summary paragraph | ⚠️ Draft | Derived from resume. Owner should review and approve before publishing. |
 | Employer project descriptions | ⚠️ Pending | Scholly / Bitrix24 / CRM work is described using resume wording. Confirm no confidential details exposed. |
 | Experience bullet points | ⚠️ Pending | Copied verbatim from resume. Owner to confirm accuracy and disclosure limits. |
@@ -28,6 +29,7 @@ Items below must be resolved before production deployment. Draft placeholders ar
 | WorkflowDesk case study | 🟡 Hosted demo and source linked; a written case study page (problem, tradeoffs, limitations) is still to do |
 | DataBridge Inspector case study | 🟡 Hosted demo and source linked (2026-10-04); a written case study page (problem, tradeoffs, limitations) is still to do |
 | TimeSlot case study | 🟡 Hosted demo and source linked (2026-10-04); a written case study page (problem, tradeoffs, limitations) is still to do |
+| Job Hunt | 🟡 Added 2026-10-19 — source linked (ahmed123doeswork/ats-cv-job-hunt); no hosted demo by design (runs locally). Description, highlights and stated limitations (scrapers depend on site markup; no automated tests yet) need owner approval. Screenshots are copied from the repo's `docs/screenshots` and use its fictional demo profile. |
 | Musicity (team project) | 🟢 Linked (2026-10-04) — contributor repo (Tonmoy-saha18/Musicity-Beta), framed as a collaborative contribution, not an owned project; no demo exists |
 
 ## Legal / privacy

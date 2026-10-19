@@ -1,9 +1,28 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Avatar from '../components/Avatar.tsx';
-import { PROFILE, SKILLS, EXPERIENCE, WORKFLOWDESK_DEMO_URL, WORKFLOWDESK_SOURCE_URL, DATABRIDGE_DEMO_URL, DATABRIDGE_SOURCE_URL, TIMESLOT_DEMO_URL, TIMESLOT_SOURCE_URL } from '../content/profile.ts';
+import Icon from '../components/Icon.astro';
+import ProofFeed from '../components/ProofFeed.astro';
+import type { IconName } from '../components/icons.ts';
+import { PROFILE, SKILLS, EXPERIENCE } from '../content/profile.ts';
+import { PROJECTS, STATUS_LABEL } from '../content/projects.ts';
+import jobHuntDashboard from '../assets/projects/jobhunt/dashboard.png';
+import jobHuntAts from '../assets/projects/jobhunt/ats-check.png';
 
 const currentRole = EXPERIENCE[0];
+const featured = PROJECTS.find(p => p.id === 'jobhunt')!;
+const others = PROJECTS.filter(p => p.id !== 'jobhunt' && p.status === 'demo');
+
+const SKILL_ICONS: Record<string, IconName> = {
+  'Languages': 'code',
+  'Frameworks': 'layers',
+  'Front-End': 'monitor',
+  'Back-End': 'server',
+  'Databases': 'database',
+  'DevOps & Tools': 'wrench',
+  'Architecture': 'network',
+};
 
 const description = `Ahmed - Full-Stack Software Engineer building scalable web applications with ASP.NET Core (C#), React, TypeScript, and PostgreSQL/MySQL.`;
 ---
@@ -15,213 +34,289 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
     <div class="container hero-inner">
 
       <div class="hero-text">
-        <h1 id="hero-heading" class="hero-display hero-anim-1">
-          Ahmed
+        <p class="hero-intro hero-anim-1">
+          <img src={PROFILE.profileImage} alt="" width="40" height="40" class="hero-intro-photo" loading="eager" />
+          <span class="hero-intro-text">
+            <span class="hero-intro-name">Ahmed</span>
+            <span class="hero-intro-role">Full-stack software engineer</span>
+          </span>
+        </p>
+
+        <h1 id="hero-heading" class="hero-display hero-anim-2">
+          Web apps that stay correct when two people press Save at once.
         </h1>
-        <p class="hero-stack hero-anim-2">{PROFILE.headline}</p>
+
         <p class="hero-body hero-anim-3">{PROFILE.summary}</p>
 
         <div class="hero-actions hero-anim-4">
-          <a href="/projects" class="btn btn-primary">See projects</a>
-          <a href="#contact"  class="btn btn-outline">Get in touch</a>
+          <a href="/projects" class="btn btn-primary">
+            See projects
+            <Icon name="arrow-right" size={16} class="icon-arrow" />
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <Icon name="send" size={16} />
+            Get in touch
+          </a>
           {PROFILE.resumePath && (
-            <a
-              href={PROFILE.resumePath}
-              class="btn btn-ghost"
-              target="_blank"
-              rel="noopener noreferrer"
-              download
-            >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
+            <a href={PROFILE.resumePath} class="btn btn-ghost" download>
+              <Icon name="download" size={16} />
               Résumé
             </a>
           )}
         </div>
 
-        <div class="hero-meta hero-anim-5">
-          <span>{PROFILE.location}</span>
-          <span class="hero-meta-sep" aria-hidden="true">·</span>
-          <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer">StudyNet</a>
-          <span class="hero-meta-sep" aria-hidden="true">·</span>
-          <span>BSc CSE, 3.98 GPA</span>
-        </div>
+        <ul class="hero-meta hero-anim-5" role="list">
+          <li><Icon name="map-pin" size={16} />{PROFILE.location}</li>
+          <li><Icon name="building" size={16} />{currentRole.company}</li>
+          <li><Icon name="graduation-cap" size={16} />BSc CSE, CGPA 3.98</li>
+        </ul>
       </div>
 
-      <div class="hero-photo-wrap hero-anim-photo" aria-hidden="true">
-        <img
-          src={PROFILE.profileImage}
-          alt="Photo of Ahmed"
-          class="hero-photo"
-          width="300"
-          height="340"
-          loading="eager"
-        />
+      <div class="hero-feed hero-anim-feed">
+        <ProofFeed />
       </div>
 
     </div>
   </section>
 
   <!-- ── Currently ── -->
-  <section class="current-section reveal" aria-labelledby="current-heading">
+  <section class="current-section" aria-labelledby="current-heading">
     <div class="container">
-      <div class="current-inner">
-        <div class="current-label-col">
-          <span class="current-label" id="current-heading">Currently</span>
+      <div class="current-inner reveal">
+        <div class="current-label">
           <span class="current-dot" aria-hidden="true"></span>
+          <span id="current-heading">Currently</span>
         </div>
         <div class="current-body">
           <h2 class="current-title">{currentRole.title}</h2>
-          <p class="current-where">{currentRole.company}, {currentRole.location} &nbsp;·&nbsp; {currentRole.period}</p>
+          <p class="current-where">
+            <Icon name="building" size={14} />{currentRole.company}, {currentRole.location}
+            <span class="current-period">{currentRole.period}</span>
+          </p>
           <p class="current-desc">
             Leading full-stack development of Scholly, a multi-tenant SaaS platform, with ASP.NET Core, React/TypeScript, and MySQL. Architecting RBAC, tenant isolation, and Bitrix24 workflow automation.
           </p>
         </div>
-        <a href="/about" class="btn btn-ghost current-cta">Full experience →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Skills ── -->
-  <section class="skills-section section-sm" aria-labelledby="skills-heading">
-    <div class="container">
-      <h2 id="skills-heading" class="section-title reveal">Skills</h2>
-
-      <div class="skills-table reveal reveal-d1" role="table" aria-label="Technical skills by category">
-        {SKILLS.map(group => (
-          <div class="skill-row" role="row">
-            <span class="skill-label" role="rowheader">{group.category}</span>
-            <span class="skill-value" role="cell">
-              {group.items.join(' · ')}
-            </span>
-          </div>
-        ))}
+        <a href="/about" class="link-arrow current-cta">
+          Full experience
+          <Icon name="arrow-right" size={16} class="icon-arrow" />
+        </a>
       </div>
     </div>
   </section>
 
   <!-- ── Projects ── -->
-  <section class="projects-section section-sm" aria-labelledby="projects-heading">
+  <section class="projects-section section" aria-labelledby="projects-heading">
     <div class="container">
-      <div class="projects-header">
-        <h2 id="projects-heading" class="section-title">Projects</h2>
-        <a href="/projects" class="btn btn-ghost projects-all">All projects →</a>
+      <div class="projects-header reveal">
+        <div class="section-head">
+          <span class="icon-tile"><Icon name="folder" size={20} /></span>
+          <h2 id="projects-heading">Projects</h2>
+        </div>
+        <a href="/projects" class="link-arrow">
+          All projects
+          <Icon name="arrow-right" size={16} class="icon-arrow" />
+        </a>
       </div>
-      <p class="projects-intro">
-        Three focused engineering projects in PHP, Python, and C#. Each has a hosted demo and public source code.
+      <p class="projects-intro reveal">
+        Four projects in C#, Python, PHP and TypeScript, each with public source code. The three hosted demos run in your browser on sample data.
       </p>
 
-      <div class="project-list">
-
-        <article class="project-item reveal" aria-labelledby="proj-workflowdesk">
-          <div class="project-row">
-            <div class="project-info">
-              <h3 id="proj-workflowdesk" class="project-name">WorkflowDesk</h3>
-              <p class="project-desc">
-                Multi-tenant enquiry queue with tenant isolation, optimistic locking, a tamper-evident audit log, and business-hours SLA tracking. Laravel API, Vue front end.
-              </p>
-              <p class="project-coming">
-                <a href={WORKFLOWDESK_DEMO_URL} target="_blank" rel="noopener noreferrer">Open the hosted demo<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href={WORKFLOWDESK_SOURCE_URL} target="_blank" rel="noopener noreferrer">Source on GitHub<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href="/projects#workflowdesk">Details</a>
-              </p>
-            </div>
-            <div class="project-stack">
-              {['PHP', 'Laravel', 'Vue', 'MySQL'].map(t => (
-                <span class="badge">{t}</span>
-              ))}
-            </div>
+      <!-- Featured: newest project -->
+      <article class="feature reveal" aria-labelledby="feature-title">
+        <div class="feature-text">
+          <div class="feature-tags">
+            {featured.isNew && (
+              <span class="badge badge-accent"><Icon name="sparkles" size={13} />New</span>
+            )}
+            <span class="status status--local"><Icon name="laptop" size={13} />{STATUS_LABEL[featured.status]}</span>
           </div>
-        </article>
 
-        <article class="project-item reveal reveal-d1" aria-labelledby="proj-databridge">
-          <div class="project-row">
-            <div class="project-info">
-              <h3 id="proj-databridge" class="project-name">DataBridge Inspector</h3>
-              <p class="project-desc">
-                CSV contact normalisation tool with explainable duplicate detection, field validation, normalisation preview, and safe export. Input limits enforced; originals preserved.
-              </p>
-              <p class="project-coming">
-                <a href={DATABRIDGE_DEMO_URL} target="_blank" rel="noopener noreferrer">Open the hosted demo<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href={DATABRIDGE_SOURCE_URL} target="_blank" rel="noopener noreferrer">Source on GitHub<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href="/projects#databridge">Details</a>
-              </p>
-            </div>
-            <div class="project-stack">
-              {['Python', 'FastAPI', 'React'].map(t => (
-                <span class="badge">{t}</span>
-              ))}
-            </div>
+          <h3 id="feature-title" class="feature-name">{featured.name}</h3>
+          <p class="feature-tagline">{featured.tagline}</p>
+          <p class="feature-summary">{featured.summary}</p>
+
+          <ul class="feature-points" role="list">
+            <li>
+              <span class="feature-point-icon"><Icon name="file-text" size={16} /></span>
+              <span><strong>CV builder with an ATS score.</strong> Every flagged issue has a Fix button; export to PDF or Word.</span>
+            </li>
+            <li>
+              <span class="feature-point-icon"><Icon name="search" size={16} /></span>
+              <span><strong>Four job sites, one ranked list.</strong> Wrong-level, wrong-city and excluded jobs are filtered out.</span>
+            </li>
+            <li>
+              <span class="feature-point-icon"><Icon name="lock" size={16} /></span>
+              <span><strong>Runs on your PC.</strong> No account, and your CV never leaves your computer.</span>
+            </li>
+          </ul>
+
+          <div class="feature-actions">
+            {featured.sourceUrl && (
+              <a href={featured.sourceUrl} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                <Icon name="github" size={16} />
+                View source
+                <span class="visually-hidden">(opens in a new tab)</span>
+              </a>
+            )}
+            <a href={`/projects#${featured.id}`} class="btn btn-outline">
+              How it works
+              <Icon name="arrow-right" size={16} class="icon-arrow" />
+            </a>
           </div>
-        </article>
+        </div>
 
-        <article class="project-item reveal reveal-d2" aria-labelledby="proj-timeslot">
-          <div class="project-row">
-            <div class="project-info">
-              <h3 id="proj-timeslot" class="project-name">TimeSlot</h3>
-              <p class="project-desc">
-                Timezone-aware appointment booking with UTC storage, IANA zone identifiers, database-level conflict protection, and idempotent atomic rescheduling.
-              </p>
-              <p class="project-coming">
-                <a href={TIMESLOT_DEMO_URL} target="_blank" rel="noopener noreferrer">Open the hosted demo<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href={TIMESLOT_SOURCE_URL} target="_blank" rel="noopener noreferrer">Source on GitHub<span class="visually-hidden"> (opens in a new tab)</span> ↗</a>
-                &nbsp;·&nbsp; <a href="/projects#timeslot">Details</a>
-              </p>
-            </div>
-            <div class="project-stack">
-              {['C#', 'ASP.NET Core', 'React', 'PostgreSQL'].map(t => (
-                <span class="badge">{t}</span>
-              ))}
-            </div>
+        <figure class="feature-shots">
+          <div class="shot shot-back">
+            <Image src={jobHuntAts} alt="" widths={[480, 720]} sizes="(max-width: 960px) 70vw, 380px" loading="lazy" />
           </div>
-        </article>
+          <div class="shot shot-front">
+            <Image
+              src={jobHuntDashboard}
+              alt="Job Hunt dashboard: jobs ranked by match score, with filters by work mode, role and source, and the selected job's details."
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 960px) 92vw, 560px"
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="feature-caption">Screenshots use a fictional profile and sample listings.</figcaption>
+        </figure>
+      </article>
 
+      <!-- Hosted-demo projects -->
+      <ul class="project-list reveal" role="list">
+        {others.map((project) => (
+          <li class="project-row">
+            <span class="project-icon"><Icon name={project.icon} size={20} /></span>
+            <div class="project-info">
+              <div class="project-title-row">
+                <h3 class="project-name">{project.name}</h3>
+                <span class="status status--live"><span class="status-dot" aria-hidden="true"></span>{STATUS_LABEL[project.status]}</span>
+              </div>
+              <p class="project-desc">{project.summary}</p>
+              <div class="project-stack">
+                {project.stack.map(t => <span class="badge">{t}</span>)}
+              </div>
+            </div>
+            <div class="project-links">
+              {project.demoUrl && (
+                <a href={project.demoUrl} class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">
+                  <Icon name="globe" size={15} />
+                  Demo
+                  <span class="visually-hidden">: {project.name} (opens in a new tab)</span>
+                </a>
+              )}
+              {project.sourceUrl && (
+                <a href={project.sourceUrl} class="btn btn-ghost btn-sm" target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" size={15} />
+                  Source
+                  <span class="visually-hidden">: {project.name} (opens in a new tab)</span>
+                </a>
+              )}
+              <a href={`/projects#${project.id}`} class="btn btn-ghost btn-sm btn-icon" aria-label={`${project.name} details`} title="Details">
+                <Icon name="arrow-right" size={16} class="icon-arrow" />
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Skills ── -->
+  <section class="skills-section section" aria-labelledby="skills-heading">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="icon-tile"><Icon name="code" size={20} /></span>
+        <h2 id="skills-heading">Skills</h2>
       </div>
+
+      <ul class="skills-grid" role="list">
+        {SKILLS.map((group, i) => (
+          <li class:list={['skill-group', 'reveal', `reveal-d${Math.min(i, 5)}`]}>
+            <h3 class="skill-label">
+              <Icon name={SKILL_ICONS[group.category] ?? 'code'} size={16} />
+              {group.category}
+            </h3>
+            <ul class="skill-chips" role="list">
+              {group.items.map(item => <li class="badge">{item}</li>)}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
   <!-- ── Contact ── -->
-  <section class="contact-section section reveal" id="contact" aria-labelledby="contact-heading">
-    <div class="container contact-inner">
+  <section class="contact-section section" id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-panel reveal">
+        <div class="contact-text">
+          <span class="icon-tile contact-tile"><Icon name="send" size={20} /></span>
+          <h2 id="contact-heading" class="contact-title">Get in touch</h2>
+          <p class="contact-body">
+            Open to engineering roles and technical discussions. I read every message.
+          </p>
+        </div>
 
-      <div class="contact-text">
-        <h2 id="contact-heading" class="section-title">Get in touch</h2>
-        <p class="contact-body">
-          Open to engineering roles and technical discussions.<br/>
-          I read every message.
-        </p>
+        <ul class="contact-links" role="list">
+          <li class="contact-item">
+            <a href={`mailto:${PROFILE.email}`} class="contact-link">
+              <span class="contact-link-icon"><Icon name="mail" size={18} /></span>
+              <span class="contact-link-text">
+                <span class="contact-link-label">Email</span>
+                <span class="contact-link-value">{PROFILE.email}</span>
+              </span>
+            </a>
+            <button type="button" class="contact-copy" data-copy={PROFILE.email} aria-label="Copy email address">
+              <span class="copy-icon copy-icon-idle"><Icon name="copy" size={16} /></span>
+              <span class="copy-icon copy-icon-done"><Icon name="check" size={16} strokeWidth={2.4} /></span>
+            </button>
+          </li>
+
+          {PROFILE.linkedin && (
+            <li class="contact-item">
+              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" class="contact-link">
+                <span class="contact-link-icon"><Icon name="linkedin" size={18} /></span>
+                <span class="contact-link-text">
+                  <span class="contact-link-label">LinkedIn</span>
+                  <span class="contact-link-value">linkedin.com/in/onlyahmed</span>
+                </span>
+                <Icon name="arrow-up-right" size={16} class="icon-arrow contact-ext" />
+                <span class="visually-hidden">(opens in a new tab)</span>
+              </a>
+            </li>
+          )}
+
+          {PROFILE.github && (
+            <li class="contact-item">
+              <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" class="contact-link">
+                <span class="contact-link-icon"><Icon name="github" size={18} /></span>
+                <span class="contact-link-text">
+                  <span class="contact-link-label">GitHub</span>
+                  <span class="contact-link-value">{PROFILE.github.replace('https://', '')}</span>
+                </span>
+                <Icon name="arrow-up-right" size={16} class="icon-arrow contact-ext" />
+                <span class="visually-hidden">(opens in a new tab)</span>
+              </a>
+            </li>
+          )}
+
+          {PROFILE.resumePath && (
+            <li class="contact-item">
+              <a href={PROFILE.resumePath} class="contact-link" download>
+                <span class="contact-link-icon"><Icon name="file-text" size={18} /></span>
+                <span class="contact-link-text">
+                  <span class="contact-link-label">Résumé</span>
+                  <span class="contact-link-value">Download PDF</span>
+                </span>
+                <Icon name="download" size={16} class="contact-ext icon-download" />
+              </a>
+            </li>
+          )}
+        </ul>
+        <p class="visually-hidden" role="status" data-copy-status></p>
       </div>
-
-      <div class="contact-links">
-        <a href={`mailto:${PROFILE.email}`} class="contact-link">
-          <span class="contact-link-icon" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          </span>
-          <span class="contact-link-text">{PROFILE.email}</span>
-        </a>
-
-        {PROFILE.linkedin && (
-          <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" class="contact-link">
-            <span class="contact-link-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </span>
-            <span class="contact-link-text">linkedin.com/in/onlyahmed</span>
-          </a>
-        )}
-
-        {PROFILE.github && (
-          <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" class="contact-link">
-            <span class="contact-link-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            </span>
-            <span class="contact-link-text">{PROFILE.github.replace('https://', '')}</span>
-          </a>
-        )}
-      </div>
-
     </div>
   </section>
 
@@ -232,16 +327,46 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
 
 </BaseLayout>
 
+<script>
+  function initCopy() {
+    const status = document.querySelector<HTMLElement>('[data-copy-status]');
+    document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach(btn => {
+      if (btn.dataset.ready) return;
+      btn.dataset.ready = 'true';
+      if (!navigator.clipboard) { btn.hidden = true; return; }
+      let timer: number | undefined;
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+          btn.classList.add('is-done');
+          btn.setAttribute('aria-label', 'Email address copied');
+          if (status) status.textContent = 'Email address copied to clipboard.';
+        } catch {
+          if (status) status.textContent = 'Copy failed. Select the address to copy it.';
+          return;
+        }
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          btn.classList.remove('is-done');
+          btn.setAttribute('aria-label', 'Copy email address');
+          if (status) status.textContent = '';
+        }, 2000);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initCopy);
+</script>
+
 <style>
-/* ── Hero entrance animations ─────────────────────────────────────────── */
+/* ── Hero entrance: one orchestrated sequence ────────────────────────── */
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-anim-1 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.05s; }
-  .hero-anim-2 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.18s; }
-  .hero-anim-3 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.3s;  }
-  .hero-anim-4 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.42s; }
-  .hero-anim-5 { animation: enter-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.52s; }
-  .hero-anim-photo { animation: enter-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.1s; }
+  .hero-anim-1 { animation: enter-up 0.7s var(--ease-out) both 0.05s; }
+  .hero-anim-2 { animation: enter-up 0.7s var(--ease-out) both 0.14s; }
+  .hero-anim-3 { animation: enter-up 0.7s var(--ease-out) both 0.24s; }
+  .hero-anim-4 { animation: enter-up 0.7s var(--ease-out) both 0.32s; }
+  .hero-anim-5 { animation: enter-up 0.7s var(--ease-out) both 0.4s; }
+  .hero-anim-feed { animation: materialize 0.9s var(--ease-out) both 0.3s; }
 }
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
@@ -249,38 +374,79 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
 .hero {
   padding-block: var(--space-16) var(--space-20);
   position: relative;
+  overflow: clip;
+}
+
+/* Quiet dot grid behind the feed: structure, not decoration wash */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 45%;
+  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 60% 70% at 60% 45%, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 60% 45%, #000 20%, transparent 75%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .hero-inner {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   align-items: center;
   gap: var(--space-16);
-  min-height: calc(100dvh - var(--nav-height) - 8rem);
+  min-height: calc(100dvh - var(--nav-height) - 9rem);
+}
+
+.hero-intro {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  max-width: none;
+}
+
+.hero-intro-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 3px var(--color-border);
+}
+
+.hero-intro-text {
+  display: grid;
+  line-height: 1.25;
+}
+
+.hero-intro-name {
+  font-family: var(--font-display);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  font-size: var(--text-base);
+}
+
+.hero-intro-role {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
 }
 
 .hero-display {
-  font-size: clamp(3.25rem, 8vw, 6rem);
-  font-weight: var(--font-extrabold);
-  line-height: 1.0;
-  letter-spacing: -0.04em;
-  margin-bottom: var(--space-5);
-  color: var(--color-text-primary);
-}
-
-.hero-stack {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--color-accent);
+  font-size: clamp(2.4rem, 5.2vw, 4.25rem);
+  font-weight: var(--font-bold);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
   margin-bottom: var(--space-6);
-  max-width: none;
+  max-width: 14ch;
+  font-variation-settings: 'opsz' 96;
 }
 
 .hero-body {
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
   color: var(--color-text-secondary);
-  max-width: 46ch;
+  max-width: 50ch;
   margin-bottom: var(--space-8);
 }
 
@@ -294,53 +460,23 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
 
 .hero-meta {
   display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  list-style: none;
+  padding: 0;
   font-size: var(--text-sm);
   color: var(--color-text-tertiary);
-  flex-wrap: wrap;
 }
 
-.hero-meta a {
-  color: var(--color-text-tertiary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+.hero-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
 }
 
-.hero-meta a:hover {
-  color: var(--color-accent);
-}
+.hero-meta :global(svg) { color: var(--color-text-tertiary); }
 
-.hero-meta-sep {
-  opacity: 0.4;
-}
-
-/* Photo */
-.hero-photo-wrap {
-  position: relative;
-  width: 260px;
-  height: 300px;
-  border-radius: var(--radius-2xl);
-  flex-shrink: 0;
-}
-
-.hero-photo-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: calc(var(--radius-2xl) + 3px);
-  background: var(--gradient-accent);
-  z-index: -1;
-}
-
-.hero-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: var(--radius-2xl);
-  display: block;
-}
+.hero-feed { min-width: 0; }
 
 /* ── Currently ───────────────────────────────────────────────────────── */
 
@@ -352,251 +488,466 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
 
 .current-inner {
   display: grid;
-  grid-template-columns: 120px 1fr auto;
+  grid-template-columns: 9rem 1fr auto;
   gap: var(--space-8);
   align-items: start;
 }
 
-.current-label-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  padding-top: 0.2rem;
-}
-
 .current-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--color-accent);
-  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-success);
+  padding-top: 0.3rem;
 }
 
 .current-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 0 3px var(--color-accent-muted), 0 0 12px var(--color-accent-muted);
-  animation: dot-pulse 2.5s ease-in-out infinite;
+  background: currentColor;
+  box-shadow: 0 0 0 3px var(--color-success-muted);
 }
 
-@keyframes dot-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .current-dot { animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .current-dot { animation: status-pulse 2.4s var(--ease-in-out) infinite; }
 }
 
 .current-title {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   margin-bottom: var(--space-2);
-  letter-spacing: -0.02em;
 }
 
 .current-where {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
   font-size: var(--text-sm);
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   margin-bottom: var(--space-3);
-  font-family: var(--font-mono);
   max-width: none;
+}
+
+.current-period {
+  color: var(--color-text-tertiary);
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--color-border-strong);
 }
 
 .current-desc {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  line-height: var(--leading-relaxed);
-  max-width: 52ch;
+  max-width: 60ch;
 }
 
 .current-cta {
   align-self: center;
-  flex-shrink: 0;
   white-space: nowrap;
-}
-
-/* ── Skills ──────────────────────────────────────────────────────────── */
-
-.skills-section {
-  /* inherits section-sm padding */
-}
-
-.section-title {
-  font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));
-  font-weight: var(--font-bold);
-  letter-spacing: -0.03em;
-  margin-bottom: var(--space-6);
-}
-
-.skills-table {
-  border-top: 1px solid var(--color-border);
-}
-
-.skill-row {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: var(--space-8);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--color-border);
-  align-items: baseline;
-}
-
-.skill-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--color-text-tertiary);
-  flex-shrink: 0;
-  line-height: var(--leading-relaxed);
-}
-
-.skill-value {
-  font-size: var(--text-sm);
-  color: var(--color-text-secondary);
-  line-height: var(--leading-relaxed);
 }
 
 /* ── Projects ────────────────────────────────────────────────────────── */
 
-.projects-section {
-  background: var(--color-bg-secondary);
-  border-block: 1px solid var(--color-border);
-}
-
 .projects-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
   flex-wrap: wrap;
+  margin-bottom: var(--space-3);
 }
+
+.projects-header .section-head { margin-bottom: 0; }
 
 .projects-intro {
-  font-size: var(--text-sm);
-  color: var(--color-text-tertiary);
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-10);
+  max-width: 62ch;
+}
+
+/* Featured panel */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: var(--space-12);
+  align-items: center;
+  padding: var(--space-10);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
   margin-bottom: var(--space-8);
-  margin-top: calc(-1 * var(--space-3));
-  max-width: 58ch;
+  overflow: clip;
 }
 
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.feature-name {
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.feature-tagline {
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.feature-summary {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.feature-points {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.feature-points li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.feature-point-icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+}
+
+.feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Layered screenshots: depth by offset + shadow, the back one slides out on hover */
+.feature-shots {
+  position: relative;
+  aspect-ratio: 16 / 12;
+  margin: 0;
+}
+
+.shot {
+  position: absolute;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+
+.shot :global(img) {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.shot-back {
+  width: 72%;
+  top: 0;
+  right: 0;
+  box-shadow: var(--shadow-md);
+  transform: rotate(2deg);
+  opacity: 0.92;
+}
+
+.shot-front {
+  width: 88%;
+  left: 0;
+  bottom: 2.25rem;
+  box-shadow: var(--shadow-xl);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .feature:hover .shot-back  { transform: rotate(3.5deg) translate(10px, -8px); }
+  .feature:hover .shot-front { transform: translateY(-4px); }
+}
+
+.feature-caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* Hosted-demo projects: one panel, rows divided by hairlines */
 .project-list {
-  border-top: 1px solid var(--color-border);
-}
-
-.project-item {
-  border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-6);
-  transition: background-color var(--transition-fast);
+  list-style: none;
+  padding: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
 }
 
 .project-row {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--space-8);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-5);
   align-items: start;
+  padding: var(--space-6);
+  transition: background-color var(--transition-fast);
+}
+
+.project-row + .project-row { border-top: 1px solid var(--color-border); }
+.project-row:hover { background: color-mix(in srgb, var(--color-bg-secondary) 55%, transparent); }
+
+.project-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  color: var(--color-accent);
+  transition: transform var(--dur-slow) var(--ease-out), background-color var(--transition-fast);
+}
+
+.project-row:hover .project-icon {
+  transform: rotate(-6deg) scale(1.05);
+  background: var(--color-accent-muted);
+}
+
+.project-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .project-name {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
-  letter-spacing: -0.025em;
-  margin-bottom: var(--space-2);
 }
 
 .project-desc {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
-  max-width: 56ch;
-  margin-bottom: var(--space-2);
-}
-
-.project-coming {
-  font-size: var(--text-xs);
-  font-family: var(--font-mono);
-  color: var(--color-text-tertiary);
-  max-width: none;
+  max-width: 62ch;
+  margin-bottom: var(--space-3);
 }
 
 .project-stack {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  justify-content: flex-end;
-  flex-shrink: 0;
-  padding-top: 0.2rem;
+}
+
+.project-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── Skills ──────────────────────────────────────────────────────────── */
+
+.skills-section {
+  background: var(--color-bg-secondary);
+  border-block: 1px solid var(--color-border);
+}
+
+.skills-grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--space-4);
+}
+
+.skill-group {
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+}
+
+.skill-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  letter-spacing: 0;
+  margin-bottom: var(--space-4);
+}
+
+.skill-label :global(svg) { color: var(--color-accent); }
+
+.skill-chips {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.skill-chips .badge {
+  transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--dur-base) var(--ease-out);
+}
+
+.skill-chips .badge:hover {
+  border-color: var(--color-accent-border);
+  color: var(--color-accent);
+  transform: translateY(-1px);
 }
 
 /* ── Contact ──────────────────────────────────────────────────────────── */
 
-.contact-section {
-  border-top: 1px solid var(--color-border);
-}
-
-.contact-inner {
+.contact-panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-16);
-  align-items: start;
+  gap: var(--space-12);
+  align-items: center;
+  padding: var(--space-12);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-md);
+}
+
+.contact-tile { margin-bottom: var(--space-5); }
+
+.contact-title {
+  font-size: clamp(var(--text-3xl), 4.5vw, var(--text-5xl));
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-4);
 }
 
 .contact-body {
   font-size: var(--text-lg);
   color: var(--color-text-secondary);
-  margin-top: var(--space-4);
-  line-height: var(--leading-relaxed);
+  max-width: 34ch;
 }
 
 .contact-links {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.contact-item {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding-top: var(--space-2);
+  align-items: stretch;
+  gap: var(--space-2);
 }
 
 .contact-link {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  text-decoration: none;
-  color: var(--color-text-secondary);
-  transition: color var(--transition-fast);
-  padding: var(--space-3);
-  margin: calc(-1 * var(--space-3));
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  text-decoration: none;
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--dur-base) var(--ease-out);
 }
 
 .contact-link:hover {
-  color: var(--color-accent);
-  background: var(--color-accent-muted);
-}
-
-.contact-link-icon {
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: inherit;
-  transition: border-color var(--transition-fast), background-color var(--transition-fast);
-}
-
-.contact-link:hover .contact-link-icon {
   border-color: var(--color-accent-border);
   background: var(--color-accent-muted);
+  color: var(--color-text-primary);
+}
+
+.contact-link:active { transform: scale(0.985); transition-duration: var(--dur-press); }
+
+.contact-link-icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-accent);
+  flex-shrink: 0;
 }
 
 .contact-link-text {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  font-family: var(--font-mono);
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
 }
+
+.contact-link-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+}
+
+.contact-link-value {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-link :global(.contact-ext) {
+  margin-left: auto;
+  color: var(--color-text-tertiary);
+}
+
+.contact-copy {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast), transform var(--dur-base) var(--ease-out);
+}
+
+.contact-copy:hover { color: var(--color-text-primary); border-color: var(--color-border-strong); }
+.contact-copy:active { transform: scale(0.94); transition-duration: var(--dur-press); }
+
+.contact-copy.is-done {
+  color: var(--color-success);
+  border-color: var(--color-success-border);
+  background: var(--color-success-muted);
+}
+
+.copy-icon {
+  grid-area: 1 / 1;
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+
+.copy-icon-done { opacity: 0; transform: scale(0.5); }
+.contact-copy.is-done .copy-icon-idle { opacity: 0; transform: scale(0.5); }
+.contact-copy.is-done .copy-icon-done { opacity: 1; transform: none; }
 
 /* ── Avatar widget ────────────────────────────────────────────────────── */
 
@@ -609,77 +960,55 @@ const description = `Ahmed - Full-Stack Software Engineer building scalable web 
 
 /* ── Responsive ──────────────────────────────────────────────────────── */
 
-@media (max-width: 900px) {
-  .current-inner {
-    grid-template-columns: 100px 1fr;
-    grid-template-rows: auto auto;
-  }
-  .current-cta {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: start;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   .hero-inner {
     grid-template-columns: 1fr;
     min-height: auto;
+    gap: var(--space-12);
+  }
+  .hero::before { inset: 40% 0 0 0; }
+  .hero-display { max-width: 18ch; }
+
+  .feature {
+    grid-template-columns: 1fr;
+    padding: var(--space-8);
     gap: var(--space-10);
   }
 
-  .hero-photo-wrap {
-    order: -1;
-    width: 180px;
-    height: 210px;
-    margin-inline: auto;
-  }
-
-  .hero-display {
-    font-size: clamp(2.5rem, 10vw, 4rem);
-  }
-
-  .contact-inner {
+  .contact-panel {
     grid-template-columns: 1fr;
     gap: var(--space-8);
+    padding: var(--space-8);
   }
 
-  .project-row {
-    grid-template-columns: 1fr;
+  .current-inner {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-3) var(--space-8);
   }
-
-  .project-stack {
-    justify-content: flex-start;
-  }
+  .current-label { grid-column: 1 / -1; padding-top: 0; }
 }
 
 @media (max-width: 640px) {
-  .current-inner {
-    grid-template-columns: 1fr;
+  .hero { padding-block: var(--space-10) var(--space-16); }
+
+  .hero-actions .btn { flex: 1 1 auto; }
+  .hero-actions .btn-ghost { flex: 0 0 auto; margin-left: calc(-1 * var(--space-3)); }
+
+  /* Keep the first-view meta clear of the fixed guide widget */
+  .hero-meta { padding-right: 6.5rem; flex-direction: column; }
+
+  .current-inner { grid-template-columns: 1fr; }
+
+  .feature { padding: var(--space-5); border-radius: var(--radius-xl); }
+
+  .project-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: var(--space-5);
     gap: var(--space-4);
   }
-  .current-label-col {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--space-3);
-  }
-  .current-cta {
-    grid-column: 1;
-    grid-row: auto;
-  }
+  .project-links { grid-column: 1 / -1; flex-wrap: wrap; }
 
-  .skill-row {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .hero-actions .btn {
-    justify-content: center;
-  }
+  .contact-panel { padding: var(--space-5); border-radius: var(--radius-xl); }
 
   .avatar-fixed {
     bottom: 1rem;

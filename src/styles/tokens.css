@@ -1,37 +1,55 @@
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
+/*
+  Direction: "what the code does". Cool paper, graphite ink, one ultramarine
+  accent. Green and amber are status colours only (live demo / team project),
+  never decoration. Text colours are chosen to clear WCAG AA 4.5:1 on --color-bg.
+*/
 
 :root {
   /* ── Palette: light mode ─────────────────────────────────────────────── */
-  --color-bg:           #f6f7fc;
-  --color-bg-secondary: #edf0f8;
-  --color-surface:      #ffffff;
+  --color-bg:               #f5f6f8;
+  --color-bg-secondary:     #eceef2;
+  --color-surface:          #ffffff;
   --color-surface-elevated: #ffffff;
-  --color-border:       #dde1ec;
-  --color-border-subtle:#edf0f8;
+  --color-border:           #dcdfe5;
+  --color-border-subtle:    #e8eaee;
+  --color-border-strong:    #c3c8d1;
 
-  --color-text-primary:   #0d1117;
-  --color-text-secondary: #4b5565;
-  --color-text-tertiary:  #8893a4;
+  --color-text-primary:   #14161b;
+  --color-text-secondary: #464c58;
+  --color-text-tertiary:  #626977;
   --color-text-on-accent: #ffffff;
-  --color-text-inverse:   #eaecf6;
+  --color-text-inverse:   #eceef2;
 
-  /* Periwinkle indigo accent — deeper for light bg contrast */
-  --color-accent:        #4f46e5;
-  --color-accent-hover:  #4338ca;
-  --color-accent-muted:  rgba(79, 70, 229, 0.08);
-  --color-accent-border: rgba(79, 70, 229, 0.25);
+  /* Ultramarine accent */
+  --color-accent:        #2a46d6;
+  --color-accent-hover:  #2038b8;
+  --color-accent-muted:  rgba(42, 70, 214, 0.08);
+  --color-accent-soft:   rgba(42, 70, 214, 0.14);
+  --color-accent-border: rgba(42, 70, 214, 0.28);
 
-  /* Code / mono label tint */
-  --color-code:    #059669;
-  --color-code-bg: rgba(5, 150, 105, 0.07);
+  /* Status */
+  --color-success:        #12804f;
+  --color-success-muted:  rgba(18, 128, 79, 0.1);
+  --color-success-border: rgba(18, 128, 79, 0.28);
+  --color-warn:           #9a5806;
+  --color-warn-muted:     rgba(180, 104, 9, 0.1);
+  --color-warn-border:    rgba(180, 104, 9, 0.28);
 
-  /* Backward compat alias — avatar CSS references --color-teal */
-  --color-teal:      var(--color-accent);
-  --color-teal-dim:  var(--color-accent-hover);
-  --color-teal-light:var(--color-accent);
+  /* Code / protocol text */
+  --color-code:    #12804f;
+  --color-code-bg: rgba(18, 128, 79, 0.08);
 
-  /* Gradient: used for photo border and highlights */
-  --gradient-accent: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  /* Glass material for floating chrome */
+  --material-bg:     rgba(245, 246, 248, 0.72);
+  --material-edge:   rgba(255, 255, 255, 0.7);
+  --material-shadow: 0 1px 0 rgba(20, 22, 27, 0.06), 0 8px 24px -12px rgba(20, 22, 27, 0.18);
+
+  /* Backward compat aliases — avatar CSS references these */
+  --color-teal:       var(--color-accent);
+  --color-teal-dim:   var(--color-accent-hover);
+  --color-teal-light: var(--color-accent);
+  --gradient-accent:  linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
 
   /* ── Spacing ─────────────────────────────────────────────────────────── */
   --space-1: 0.25rem;
@@ -48,7 +66,8 @@
   --space-24: 6rem;
 
   /* ── Typography ──────────────────────────────────────────────────────── */
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Instrument Sans', system-ui, sans-serif;
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
 
   --text-xs:   0.75rem;
@@ -62,8 +81,8 @@
   --text-5xl:  3rem;
   --text-6xl:  3.75rem;
 
-  --leading-tight:   1.2;
-  --leading-snug:    1.375;
+  --leading-tight:   1.12;
+  --leading-snug:    1.35;
   --leading-normal:  1.5;
   --leading-relaxed: 1.65;
 
@@ -73,27 +92,35 @@
   --font-bold:     700;
   --font-extrabold:800;
 
-  /* ── Radius ──────────────────────────────────────────────────────────── */
-  --radius-sm:   0.25rem;
-  --radius-md:   0.5rem;
-  --radius-lg:   0.75rem;
-  --radius-xl:   1rem;
-  --radius-2xl:  1.5rem;
+  /* ── Radius (by hierarchy: chips < controls < panels) ────────────────── */
+  --radius-sm:   0.375rem;
+  --radius-md:   0.625rem;
+  --radius-lg:   0.875rem;
+  --radius-xl:   1.125rem;
+  --radius-2xl:  1.625rem;
   --radius-full: 9999px;
 
   /* ── Shadow ──────────────────────────────────────────────────────────── */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
-  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 10px 24px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.12);
+  --shadow-sm: 0 1px 2px 0 rgb(20 22 27 / 0.05);
+  --shadow-md: 0 1px 2px rgb(20 22 27 / 0.04), 0 6px 16px -6px rgb(20 22 27 / 0.1);
+  --shadow-lg: 0 2px 4px rgb(20 22 27 / 0.04), 0 16px 32px -12px rgb(20 22 27 / 0.16);
+  --shadow-xl: 0 4px 8px rgb(20 22 27 / 0.04), 0 28px 56px -20px rgb(20 22 27 / 0.22);
 
-  /* ── Transitions ─────────────────────────────────────────────────────── */
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  /* Critically damped feel: fast start, no overshoot (Apple default spring). */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-press: 100ms;
+  --dur-fast:  160ms;
+  --dur-base:  240ms;
+  --dur-slow:  420ms;
+
+  --transition-fast: var(--dur-fast) var(--ease-out);
+  --transition-base: var(--dur-base) var(--ease-out);
+  --transition-slow: var(--dur-slow) var(--ease-out);
 
   /* ── Layout ──────────────────────────────────────────────────────────── */
-  --container-max:   72rem;
+  --container-max:   74rem;
   --container-prose: 65ch;
   --gutter:    1rem;
   --nav-height:4rem;
@@ -102,62 +129,89 @@
 /* ── Dark mode ────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-bg:           #080c16;
-    --color-bg-secondary: #0c1120;
-    --color-surface:      #111827;
-    --color-surface-elevated: #182030;
-    --color-border:       #1e2d42;
-    --color-border-subtle:#111827;
+    --color-bg:               #0c0e12;
+    --color-bg-secondary:     #12151a;
+    --color-surface:          #161920;
+    --color-surface-elevated: #1c2028;
+    --color-border:           #272c35;
+    --color-border-subtle:    #1c2028;
+    --color-border-strong:    #363c48;
 
-    --color-text-primary:   #eaecf6;
-    --color-text-secondary: #7b8799;
-    --color-text-tertiary:  #3d4d63;
-    --color-text-on-accent: #ffffff;
-    --color-text-inverse:   #0d1117;
+    --color-text-primary:   #eceef2;
+    --color-text-secondary: #aab0bb;
+    --color-text-tertiary:  #868d9a;
+    --color-text-on-accent: #0c0e12;
+    --color-text-inverse:   #14161b;
 
-    --color-accent:        #818cf8;
-    --color-accent-hover:  #6d7ef6;
-    --color-accent-muted:  rgba(129, 140, 248, 0.12);
-    --color-accent-border: rgba(129, 140, 248, 0.3);
+    --color-accent:        #93a6ff;
+    --color-accent-hover:  #b0bdff;
+    --color-accent-muted:  rgba(147, 166, 255, 0.1);
+    --color-accent-soft:   rgba(147, 166, 255, 0.16);
+    --color-accent-border: rgba(147, 166, 255, 0.32);
 
-    --color-code:    #34d399;
-    --color-code-bg: rgba(52, 211, 153, 0.08);
+    --color-success:        #4fd18f;
+    --color-success-muted:  rgba(79, 209, 143, 0.1);
+    --color-success-border: rgba(79, 209, 143, 0.26);
+    --color-warn:           #f2b552;
+    --color-warn-muted:     rgba(242, 181, 82, 0.1);
+    --color-warn-border:    rgba(242, 181, 82, 0.26);
 
-    --gradient-accent: linear-gradient(135deg, #818cf8 0%, #22d3ee 100%);
+    --color-code:    #4fd18f;
+    --color-code-bg: rgba(79, 209, 143, 0.08);
+
+    --material-bg:     rgba(12, 14, 18, 0.7);
+    --material-edge:   rgba(255, 255, 255, 0.06);
+    --material-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-    --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.4);
-    --shadow-lg: 0 10px 24px -4px rgb(0 0 0 / 0.5);
-    --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.6);
+    --shadow-md: 0 1px 2px rgb(0 0 0 / 0.3), 0 6px 16px -6px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 16px 32px -12px rgb(0 0 0 / 0.6);
+    --shadow-xl: 0 4px 8px rgb(0 0 0 / 0.3), 0 28px 56px -20px rgb(0 0 0 / 0.7);
   }
 }
 
 :root[data-theme="dark"] {
-  --color-bg:           #080c16;
-  --color-bg-secondary: #0c1120;
-  --color-surface:      #111827;
-  --color-surface-elevated: #182030;
-  --color-border:       #1e2d42;
-  --color-border-subtle:#111827;
+  --color-bg:               #0c0e12;
+  --color-bg-secondary:     #12151a;
+  --color-surface:          #161920;
+  --color-surface-elevated: #1c2028;
+  --color-border:           #272c35;
+  --color-border-subtle:    #1c2028;
+  --color-border-strong:    #363c48;
 
-  --color-text-primary:   #eaecf6;
-  --color-text-secondary: #7b8799;
-  --color-text-tertiary:  #3d4d63;
-  --color-text-on-accent: #ffffff;
-  --color-text-inverse:   #0d1117;
+  --color-text-primary:   #eceef2;
+  --color-text-secondary: #aab0bb;
+  --color-text-tertiary:  #868d9a;
+  --color-text-on-accent: #0c0e12;
+  --color-text-inverse:   #14161b;
 
-  --color-accent:        #818cf8;
-  --color-accent-hover:  #6d7ef6;
-  --color-accent-muted:  rgba(129, 140, 248, 0.12);
-  --color-accent-border: rgba(129, 140, 248, 0.3);
+  --color-accent:        #93a6ff;
+  --color-accent-hover:  #b0bdff;
+  --color-accent-muted:  rgba(147, 166, 255, 0.1);
+  --color-accent-soft:   rgba(147, 166, 255, 0.16);
+  --color-accent-border: rgba(147, 166, 255, 0.32);
 
-  --color-code:    #34d399;
-  --color-code-bg: rgba(52, 211, 153, 0.08);
+  --color-success:        #4fd18f;
+  --color-success-muted:  rgba(79, 209, 143, 0.1);
+  --color-success-border: rgba(79, 209, 143, 0.26);
+  --color-warn:           #f2b552;
+  --color-warn-muted:     rgba(242, 181, 82, 0.1);
+  --color-warn-border:    rgba(242, 181, 82, 0.26);
 
-  --gradient-accent: linear-gradient(135deg, #818cf8 0%, #22d3ee 100%);
+  --color-code:    #4fd18f;
+  --color-code-bg: rgba(79, 209, 143, 0.08);
+
+  --material-bg:     rgba(12, 14, 18, 0.7);
+  --material-edge:   rgba(255, 255, 255, 0.06);
+  --material-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 10px 24px -4px rgb(0 0 0 / 0.5);
-  --shadow-xl: 0 20px 40px -8px rgb(0 0 0 / 0.6);
+  --shadow-md: 0 1px 2px rgb(0 0 0 / 0.3), 0 6px 16px -6px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 16px 32px -12px rgb(0 0 0 / 0.6);
+  --shadow-xl: 0 4px 8px rgb(0 0 0 / 0.3), 0 28px 56px -20px rgb(0 0 0 / 0.7);
+}
+
+/* Reduced transparency: solid chrome, no blur */
+@media (prefers-reduced-transparency: reduce) {
+  :root { --material-bg: var(--color-bg); }
 }

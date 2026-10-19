@@ -1,5 +1,6 @@
 ---
 import { PROFILE } from '../content/profile.ts';
+import Icon from './Icon.astro';
 
 const year = new Date().getFullYear();
 ---
@@ -8,21 +9,21 @@ const year = new Date().getFullYear();
   <div class="container footer-inner">
     <p class="footer-copy">
       &copy; {year} {PROFILE.firstName}. Built with
-      <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>.
+      <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro<span class="visually-hidden"> (opens in a new tab)</span></a>.
     </p>
-    <nav class="footer-links" aria-label="Footer navigation">
-      {PROFILE.linkedin && (
-        <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" class="footer-link">
-          LinkedIn
-        </a>
-      )}
+    <nav class="footer-links" aria-label="Elsewhere">
       {PROFILE.github && (
-        <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" class="footer-link">
-          GitHub
+        <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="GitHub (opens in a new tab)" title="GitHub">
+          <Icon name="github" size={18} />
         </a>
       )}
-      <a href={`mailto:${PROFILE.email}`} class="footer-link">
-        Email
+      {PROFILE.linkedin && (
+        <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn (opens in a new tab)" title="LinkedIn">
+          <Icon name="linkedin" size={18} />
+        </a>
+      )}
+      <a href={`mailto:${PROFILE.email}`} class="footer-link" aria-label={`Email ${PROFILE.email}`} title="Email">
+        <Icon name="mail" size={18} />
       </a>
     </nav>
   </div>
@@ -31,8 +32,7 @@ const year = new Date().getFullYear();
 <style>
 .footer {
   border-top: 1px solid var(--color-border);
-  padding-block: var(--space-8);
-  margin-top: auto;
+  padding-block: var(--space-6);
 }
 
 .footer-inner {
@@ -55,17 +55,24 @@ const year = new Date().getFullYear();
 .footer-links {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-1);
 }
 
 .footer-link {
-  font-size: var(--text-sm);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-full);
   color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), background-color var(--transition-fast), transform var(--dur-base) var(--ease-out);
 }
 
 .footer-link:hover {
-  color: var(--color-accent);
+  color: var(--color-text-primary);
+  background: var(--color-bg-secondary);
+  transform: translateY(-2px);
 }
+
+.footer-link:active { transform: scale(0.92); transition-duration: var(--dur-press); }
 </style>

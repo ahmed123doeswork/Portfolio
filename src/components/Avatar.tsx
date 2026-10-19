@@ -65,7 +65,7 @@ const GUIDE_ITEMS: GuideItem[] = [
   {
     id: 'projects',
     label: 'Show backend projects',
-    answer: 'Three backend-focused projects are showcased here: TimeSlot (C# / ASP.NET Core + React + PostgreSQL — timezone-aware booking with concurrency control), DataBridge Inspector (Python / FastAPI + React — CSV normalisation with duplicate detection), and WorkflowDesk (PHP / Laravel + Vue + MySQL — multi-tenant enquiry management with roles and SLA tracking). All three have hosted demos and public source on GitHub.',
+    answer: 'Three backend-focused projects are showcased here: TimeSlot (C# / ASP.NET Core + React + PostgreSQL — timezone-aware booking with concurrency control), DataBridge Inspector (Python / FastAPI + React — CSV normalisation with duplicate detection), and WorkflowDesk (PHP / Laravel + Vue + MySQL — multi-tenant enquiry management with roles and SLA tracking). All three have hosted demos and public source on GitHub. The newest, Job Hunt, is an open-source Python app that builds an ATS-friendly CV and ranks jobs from LinkedIn, BDjobs, Remotive and Jobicy; it runs on your own computer, so it has source and screenshots rather than a hosted demo.',
     link: { href: '/projects', text: 'Browse projects →' },
   },
   {

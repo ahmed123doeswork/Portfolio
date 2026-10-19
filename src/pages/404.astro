@@ -1,18 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <BaseLayout title="Page not found" noIndex={true}>
   <section class="not-found section">
     <div class="container not-found-inner">
+      <span class="not-found-icon" aria-hidden="true"><Icon name="compass" size={36} strokeWidth={1.6} /></span>
       <p class="not-found-code" aria-hidden="true">404</p>
       <h1 class="not-found-title">Page not found</h1>
       <p class="not-found-body">
         The page you're looking for doesn't exist or has moved.
       </p>
       <div class="not-found-actions">
-        <a href="/" class="btn btn-primary">Go home</a>
-        <a href="/projects" class="btn btn-outline">Browse projects</a>
+        <a href="/" class="btn btn-primary"><Icon name="home" size={16} />Go home</a>
+        <a href="/projects" class="btn btn-outline"><Icon name="folder" size={16} />Browse projects</a>
       </div>
     </div>
   </section>
@@ -33,10 +35,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   gap: var(--space-5);
 }
 
+.not-found-icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-xl);
+  background: var(--color-accent-muted);
+  color: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .not-found-icon :global(svg) { animation: compass-seek 3.2s var(--ease-in-out) infinite; }
+}
+
+@keyframes compass-seek {
+  0%, 100% { transform: rotate(-18deg); }
+  50%      { transform: rotate(24deg); }
+}
+
 .not-found-code {
-  font-size: clamp(5rem, 15vw, 10rem);
-  font-weight: var(--font-bold);
-  color: var(--color-border);
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: var(--font-extrabold);
+  letter-spacing: -0.06em;
+  color: var(--color-border-strong);
   line-height: 1;
   user-select: none;
 }
