@@ -21,6 +21,7 @@ Items below must be resolved before production deployment. Draft placeholders ar
 | Summary paragraph | ⚠️ Draft | Derived from resume. Owner should review and approve before publishing. |
 | Employer project descriptions | ⚠️ Pending | Scholly / Bitrix24 / CRM work is described using resume wording. Confirm no confidential details exposed. |
 | Experience bullet points | ⚠️ Pending | Copied verbatim from resume. Owner to confirm accuracy and disclosure limits. |
+| Current role title | ✅ Owner-corrected (2026-10-30) | "IT Support & Web Developer" at StudyNet (was "Software Engineer (Full-Stack)"). Bullets blend existing Scholly work with owner-supplied duties (Tier 1/2 support, Active Directory, CodeIgniter, MySQL). Same change applied to the CV PDF and its source `AI Job OS/assets/.net-resume.docx`. Headline/summary/page title still say "Full-Stack Software Engineer" as a professional descriptor — owner to confirm. |
 
 ## Projects
 
@@ -38,7 +39,7 @@ Items below must be resolved before production deployment. Draft placeholders ar
 |------|--------|
 | Phone number display | ⚠️ Omitted from site — available in resume only. Confirm if it should appear. |
 | Photo consent | ✅ Owner provided the photo. |
-| Resume download link | ✅ Resume is served from `/public/assets/Resume.pdf`. |
+| Resume download link | ✅ Resume is served from `/public/assets/Resume.pdf`. Refreshed 2026-10-30 to the current .NET resume (the served copy was previously the older PHP resume with an outdated phone number). Keep `assets/Resume.pdf` and `public/assets/Resume.pdf` identical. |
 
 ## Before going live
 

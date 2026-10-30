@@ -34,7 +34,7 @@ export const SKILLS = [
   },
   {
     category: 'Frameworks',
-    items: ['ASP.NET Core', 'Entity Framework Core', 'React.js', 'Next.js', 'FastAPI', 'Laravel'],
+    items: ['ASP.NET Core', 'Entity Framework Core', 'React.js', 'Next.js', 'FastAPI', 'Laravel', 'CodeIgniter'],
   },
   {
     category: 'Front-End',
@@ -56,21 +56,27 @@ export const SKILLS = [
     category: 'Architecture',
     items: ['Multi-tenant SaaS', 'RBAC', 'Clean Architecture', 'Repository Pattern', 'CQRS'],
   },
+  {
+    category: 'IT Support',
+    items: ['Tier 1/2 support', 'Active Directory', 'Hardware/network troubleshooting', 'Knowledge-base docs'],
+  },
 ] as const;
 
 export const EXPERIENCE = [
   {
-    title: 'Software Engineer (Full-Stack)',
+    title: 'IT Support & Web Developer',
     company: 'StudyNet Pty Ltd',
     location: 'Dhaka',
     period: 'Nov 2025 – Present',
     type: 'professional' as const,
     highlights: [
-      'Lead full-stack development of Scholly, a multi-tenant SaaS platform — RESTful APIs with ASP.NET Core, React front-end components, and relational data models in MySQL.',
-      'Architected RBAC and tenant isolation layers following Clean Architecture patterns.',
+      'Lead full-stack development of Scholly, a multi-tenant SaaS platform — RESTful APIs with ASP.NET Core, React front-end components, MySQL data models, and RBAC/tenant isolation following Clean Architecture.',
       'Integrated Bitrix24 for workflow automation via REST API, enabling event-driven state transitions and audit logging.',
-      'Built and consumed 20+ RESTful API endpoints; optimized indexed MySQL schemas, cutting response times by ~35%.',
-      'Collaborated in an Agile/Scrum team using Git/GitHub for version control, code review, and CI-managed deployments.',
+      'Design, develop, and deploy new features and modules for existing PHP (CodeIgniter) web applications; maintain, debug, and optimize production websites.',
+      'Manage and optimize MySQL databases for data integrity and query performance; built 20+ RESTful API endpoints and cut response times by ~35% with indexed schemas.',
+      'Provide Tier 1 and Tier 2 technical support for internal users across hardware, software, network, and connectivity issues.',
+      'Administer user accounts, permissions, and security policies in Active Directory; document support processes and common solutions in a knowledge base.',
+      'Translate stakeholder requirements into technical specifications; enforce code quality, security, and Git version-control practices.',
     ],
   },
   {

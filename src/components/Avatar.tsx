@@ -60,7 +60,7 @@ const GUIDE_ITEMS: GuideItem[] = [
   {
     id: 'intro',
     label: 'Introduce yourself',
-    answer: "Hi! I'm Ahmed — a Full-Stack Software Engineer with 3+ years building production-grade web applications. I specialise in ASP.NET Core (C#) and React/TypeScript, with a strong focus on multi-tenant SaaS architecture, RBAC, and RESTful API design. Currently leading full-stack development of the Scholly platform at StudyNet.",
+    answer: "Hi! I'm Ahmed — a Full-Stack Software Engineer with 3+ years building production-grade web applications. I specialise in ASP.NET Core (C#) and React/TypeScript, with a strong focus on multi-tenant SaaS architecture, RBAC, and RESTful API design. I'm currently IT Support & Web Developer at StudyNet, where I lead full-stack development of the Scholly platform.",
   },
   {
     id: 'projects',

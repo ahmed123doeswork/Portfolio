@@ -1,0 +1,189 @@
+---
+// Screenshot stage + thumbnail strip. Thumbnails switch the stage; the active
+// one carries the coral border. Works without JS: the first shot is shown.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Shot {
+  src: ImageMetadata;
+  alt: string;
+  label: string;
+}
+
+interface Props {
+  shots: Shot[];
+  label: string;
+  sizes?: string;
+}
+
+const { shots, label, sizes = '(max-width: 960px) 92vw, 640px' } = Astro.props;
+---
+
+<div class="viewer" data-viewer role="group" aria-label={label}>
+  <div class="viewer-stage">
+    {shots.map((shot, i) => (
+      <figure class="viewer-shot" data-shot={i} data-active={i === 0 ? 'true' : 'false'} aria-hidden={i === 0 ? undefined : 'true'}>
+        <Image
+          src={shot.src}
+          alt={shot.alt}
+          widths={shot.src.width > shot.src.height ? [640, 960, 1440] : [320, 480, 720]}
+          sizes={sizes}
+          loading="lazy"
+          class:list={[shot.src.width < shot.src.height && 'is-portrait']}
+        />
+      </figure>
+    ))}
+  </div>
+
+  {shots.length > 1 && (
+    <div class="viewer-strip" role="group" aria-label="Choose a screenshot">
+      {shots.map((shot, i) => (
+        <button
+          type="button"
+          class="viewer-thumb"
+          data-thumb={i}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          aria-label={`Show screenshot: ${shot.label}`}
+        >
+          <Image src={shot.src} alt="" widths={[160, 240]} sizes="96px" loading="lazy" />
+          <span class="viewer-thumb-label">{shot.label}</span>
+        </button>
+      ))}
+    </div>
+  )}
+</div>
+
+<script>
+  function initViewers() {
+    document.querySelectorAll<HTMLElement>('[data-viewer]').forEach(viewer => {
+      if (viewer.dataset.ready) return;
+      viewer.dataset.ready = 'true';
+      const shots = Array.from(viewer.querySelectorAll<HTMLElement>('[data-shot]'));
+      const thumbs = Array.from(viewer.querySelectorAll<HTMLButtonElement>('[data-thumb]'));
+
+      const show = (index: number) => {
+        shots.forEach((s, i) => {
+          const on = i === index;
+          s.dataset.active = String(on);
+          if (on) s.removeAttribute('aria-hidden'); else s.setAttribute('aria-hidden', 'true');
+        });
+        thumbs.forEach((t, i) => t.setAttribute('aria-pressed', String(i === index)));
+      };
+
+      thumbs.forEach((thumb, i) => {
+        thumb.addEventListener('click', () => show(i));
+        thumb.addEventListener('keydown', (e) => {
+          const delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!delta) return;
+          e.preventDefault();
+          const next = (i + delta + thumbs.length) % thumbs.length;
+          thumbs[next].focus();
+          show(next);
+        });
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initViewers);
+</script>
+
+<style>
+.viewer {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.viewer-stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.viewer-shot {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(1.015);
+  filter: blur(4px);
+  transition: opacity 0.45s var(--ease-out), transform 0.6s var(--ease-out), filter 0.45s var(--ease-out);
+}
+
+.viewer-shot[data-active="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.viewer-shot :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.viewer-shot :global(img.is-portrait) {
+  width: auto;
+  height: 92%;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.viewer-strip {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 3px;
+  margin: -3px;
+}
+
+.viewer-thumb {
+  flex: 0 0 auto;
+  display: grid;
+  gap: var(--space-1);
+  width: 6rem;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text-tertiary);
+  font: inherit;
+  border-radius: var(--radius-sm);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.viewer-thumb :global(img) {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top left;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 0 0 var(--color-coral);
+  transition: box-shadow var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+  opacity: 0.7;
+}
+
+.viewer-thumb:hover :global(img) { opacity: 1; }
+.viewer-thumb:active { transform: scale(0.96); transition-duration: var(--dur-press); }
+
+.viewer-thumb[aria-pressed="true"] { color: var(--color-text-primary); }
+.viewer-thumb[aria-pressed="true"] :global(img) {
+  opacity: 1;
+  border-color: var(--color-coral);
+  box-shadow: 0 0 0 1.5px var(--color-coral);
+}
+
+.viewer-thumb-label {
+  font-size: var(--text-caption);
+  line-height: 1.3;
+}
+</style>
